@@ -11,8 +11,6 @@ public class PlayerMovementController : MonoBehaviour
     PlayerAttackController PlayerAC;
 
     [Header("移動參數")]
-    public Joystick joystick;
-    public ButtonCheck2 buttonCheck;
     public float speed;
     public float horizontalmove;
 
@@ -21,8 +19,6 @@ public class PlayerMovementController : MonoBehaviour
     public bool jumpPressed;
     public bool isJump;
     public int jumpTime;
-
-
 
     [Header("角色狀態")]
     public bool isCrouch;
@@ -53,7 +49,6 @@ public class PlayerMovementController : MonoBehaviour
         anim = GetComponent<Animator>();
         PlayerHP = GetComponent<PlayerHealthController>();
         PlayerAC = GetComponent<PlayerAttackController>();
-        buttonCheck = GameObject.FindObjectOfType<ButtonCheck2>();
 
         //獲取碰撞框參數
         colliderStandSize = capsulecoll.size; //站立
@@ -110,7 +105,6 @@ public class PlayerMovementController : MonoBehaviour
 
         if(PlayerHP.isHurt)
         {
-            buttonCheck.dashPressed = false;
             PlayerAC.Dashing = false;
             rb.velocity = new Vector2(0,0);
         }
@@ -118,26 +112,9 @@ public class PlayerMovementController : MonoBehaviour
 
     void GroundMovement()
     {
-        //電腦用
-        //horizontalmove = Input.GetAxisRaw("Horizontal");
+        horizontalmove = Input.GetAxisRaw("Horizontal");
         //print(horizontalmove);
-        //rb.velocity = new Vector2(horizontalmove * speed,rb.velocity.y);
-
-        //手機用
-        horizontalmove = joystick.Horizontal;
-
-        if(horizontalmove >= 0.2f)
-        {
-            rb.velocity = new Vector2(speed,rb.velocity.y);
-        }
-        else if(horizontalmove <= -0.2f)
-        {
-            rb.velocity = new Vector2(-speed,rb.velocity.y);
-        }
-        else
-        {
-            rb.velocity = new Vector2(0,rb.velocity.y);
-        }
+        rb.velocity = new Vector2(horizontalmove * speed,rb.velocity.y);
 
 
 
@@ -152,8 +129,6 @@ public class PlayerMovementController : MonoBehaviour
     }
     void Jump()
     {
-        //電腦用
-        /*
         if(Input.GetButtonDown("Jump") && isOnGround && jumpTime>0)
         {
             rb.velocity = new Vector2(rb.velocity.x,jumpForce);
@@ -168,27 +143,6 @@ public class PlayerMovementController : MonoBehaviour
         {
             jumpTime = 1;
         }
-        */
-
-        //手機用
-        if(buttonCheck.jumpPressed && isOnGround && jumpTime>0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x,jumpForce);
-            jumpTime--;
-            buttonCheck.jumpPressed = false;
-        }
-        else if (buttonCheck.jumpPressed && jumpTime>0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x,jumpForce);
-            jumpTime--;
-            buttonCheck.jumpPressed = false;
-        }
-        else if(isOnGround)
-        {
-            jumpTime = 1;
-            buttonCheck.jumpPressed = false;
-        }
-
     }
 
     void FilpDirection()

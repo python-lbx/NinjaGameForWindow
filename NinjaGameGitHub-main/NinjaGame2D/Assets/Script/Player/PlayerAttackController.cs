@@ -8,8 +8,6 @@ public class PlayerAttackController : MonoBehaviour
     Animator anim;
     PlayerMovementController PlayerMovement;
     PlayerHealthController playerHealth;
-    public ButtonCheck2 buttonCheck;
-
     public GameObject Z_Attack_Box;
 
     public GameObject FireBall;
@@ -37,49 +35,35 @@ public class PlayerAttackController : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         PlayerMovement = GetComponent<PlayerMovementController>();
-        playerHealth = GetComponent<PlayerHealthController>();
-        buttonCheck = GameObject.FindObjectOfType<ButtonCheck2>();
-
-        
+        playerHealth = GetComponent<PlayerHealthController>();        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(buttonCheck.Z_AttackPressed && Z_Attack_SCD <=0) //地面攻擊
+        if(Input.GetKeyDown(KeyCode.Z) && Z_Attack_SCD <=0) //地面攻擊
         {   
             Z_Attack_SCD = Z_Attack_CD;
             anim.SetTrigger("IsAttack");
-            buttonCheck.Z_AttackPressed = false;
         }
-        else if(buttonCheck.Z_AttackPressed && Z_Attack_SCD <=0 && !PlayerMovement.isOnGround) //空中攻擊
+        else if(Input.GetKeyDown(KeyCode.Z) && Z_Attack_SCD <=0 && !PlayerMovement.isOnGround) //空中攻擊
         {
             Z_Attack_SCD = Z_Attack_CD;
             anim.SetTrigger("IsAttack");
-            buttonCheck.Z_AttackPressed = false;
-        }
-        else
-        {
-            buttonCheck.Z_AttackPressed = false;
         }
 
-        if(buttonCheck.firePressed && Fire_SCD <=0 && !PlayerMovement.isOnGround) //空中噴火
+
+        if(Input.GetKeyDown(KeyCode.F) && Fire_SCD <=0 && !PlayerMovement.isOnGround) //空中噴火
         {
             Fire_SCD = Fire_CD;
             anim.SetTrigger("JumpFire");
-            buttonCheck.firePressed = false;
             Instantiate(FireBall,ShootPoint.position,transform.rotation);
         }
-        else if(buttonCheck.firePressed && Fire_SCD <= 0) //地面噴火
+        else if(Input.GetKeyDown(KeyCode.F) && Fire_SCD <= 0) //地面噴火
         {
             Fire_SCD = Fire_CD;
             anim.SetTrigger("GroundFire");
-            buttonCheck.firePressed = false;
             Instantiate(FireBall,ShootPoint.position,transform.rotation);
-        }
-        else
-        {
-            buttonCheck.firePressed = false;
         }
 
         if(Z_Attack_SCD >0)
@@ -92,23 +76,13 @@ public class PlayerAttackController : MonoBehaviour
             Fire_SCD -= Time.deltaTime;
         }
 
-        if(buttonCheck.dashPressed)
+        if(Input.GetKeyDown(KeyCode.C))
         {
             if((Time.time >= (LastDash + dashCoolDown)) && PlayerMovement.horizontalmove !=0)
             {   
-                buttonCheck.dashPressed = false;
                 ReadyToDash();
             }
-            else
-            {
-            buttonCheck.dashPressed = false;
-            }
         }
-        else
-        {
-            buttonCheck.dashPressed = false;
-        }
-
     }
 
     private void FixedUpdate() 
