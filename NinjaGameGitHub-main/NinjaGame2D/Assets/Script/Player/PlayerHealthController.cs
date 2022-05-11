@@ -9,7 +9,7 @@ public class PlayerHealthController : MonoBehaviour
     public int Health_Current;
     public bool isHurt;
 
-    public GameObject GameOver;
+    //public GameObject GameOver;
 
     public Image HP_Image;
     public Text HP_Text;
@@ -42,7 +42,7 @@ public class PlayerHealthController : MonoBehaviour
             isHurt = false;
             FindObjectOfType<BossBehaviour>().enabled = false;
             FindObjectOfType<BossBehaviour>().rb.velocity = new Vector2(0,0);
-            GameOver.SetActive(true);
+            //GameOver.SetActive(true);
             Health_Current = 0;
             anim.SetTrigger("Dead");
         }

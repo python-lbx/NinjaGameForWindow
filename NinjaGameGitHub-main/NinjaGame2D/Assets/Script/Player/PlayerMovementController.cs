@@ -116,8 +116,6 @@ public class PlayerMovementController : MonoBehaviour
         //print(horizontalmove);
         rb.velocity = new Vector2(horizontalmove * speed,rb.velocity.y);
 
-
-
         if(Input.GetButton("Crouch") && isOnGround)
         {
             Crouch();
