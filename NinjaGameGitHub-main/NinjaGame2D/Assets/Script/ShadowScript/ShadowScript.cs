@@ -40,7 +40,7 @@ public class ShadowScript : MonoBehaviour
     {
         alpha *= alphaMultiplier;
 
-        color = new Color(0,0f,0.8f,alpha); //偏藍色
+        color = new Color(0.5f,0.5f,1f,alpha); //偏藍色
 
         thisSprite.color = color;
 

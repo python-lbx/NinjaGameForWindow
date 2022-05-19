@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class PlayerHealthController : MonoBehaviour
 {
+    [Header("生命值")]
     public int Health_Max;
     public int Health_Current;
+    [Header("受傷狀態")]
     public bool isHurt;
+    public float hurtCD;
+    public float hurtlast_time;
 
     //public GameObject GameOver;
 
+    [Header("生命插件")]
     public Image HP_Image;
     public Text HP_Text;
     public Image MP_Image;
@@ -32,9 +37,12 @@ public class PlayerHealthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isHurt && Mathf.Abs(rb.velocity.x)<0.1f)
-        {
-            isHurt = false;
+        if(isHurt)
+        {   
+            if(Time.time >= (hurtlast_time+ hurtCD))
+            {
+                isHurt = false;
+            }
         }
 
         if(Health_Current<=0)
@@ -54,17 +62,17 @@ public class PlayerHealthController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D PlayerColl) 
     {
         if(PlayerColl.gameObject.tag == "Enemy")
-        {
+        {               
+            isHurt = true;
+            hurtlast_time = Time.time;
             //Health_Current -= GameObject.FindObjectOfType<Enemy_Health_Test>().Damage;
             if(transform.position.x < PlayerColl.gameObject.transform.position.x)
             {
                 rb.velocity = new Vector2(-2f,rb.velocity.y);
-                isHurt = true;
             }
             else if(transform.position.x > PlayerColl.gameObject.transform.position.x)
             {
                 rb.velocity = new Vector2(2f,rb.velocity.y);
-                isHurt = true;
             }
         }
     }

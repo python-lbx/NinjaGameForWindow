@@ -15,11 +15,11 @@ public class PlayerAttackController : MonoBehaviour
 
     [Header("普通攻擊")]
     public float Z_Attack_CD;
-    public float Z_Attack_SCD; //Start Cool Down;
+    public float Z_Last_Time; //上次攻擊時間
 
     [Header("火球術")]
-    public float Fire_CD;
-    public float Fire_SCD;
+    public float Fire_CD;//冷卻時間
+    public float Fire_Last_Time;//上次火球時間
 
     [Header("衝刺")]
     public float dashTime;//dash時長
@@ -41,39 +41,40 @@ public class PlayerAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z) && Z_Attack_SCD <=0) //地面攻擊
-        {   
-            Z_Attack_SCD = Z_Attack_CD;
-            anim.SetTrigger("IsAttack");
-        }
-        else if(Input.GetKeyDown(KeyCode.Z) && Z_Attack_SCD <=0 && !PlayerMovement.isOnGround) //空中攻擊
+        if(Input.GetKeyDown(KeyCode.Z) && !PlayerMovement.isCrouch)
         {
-            Z_Attack_SCD = Z_Attack_CD;
-            anim.SetTrigger("IsAttack");
-        }
-
-
-        if(Input.GetKeyDown(KeyCode.F) && Fire_SCD <=0 && !PlayerMovement.isOnGround) //空中噴火
-        {
-            Fire_SCD = Fire_CD;
-            anim.SetTrigger("JumpFire");
-            Instantiate(FireBall,ShootPoint.position,transform.rotation);
-        }
-        else if(Input.GetKeyDown(KeyCode.F) && Fire_SCD <= 0) //地面噴火
-        {
-            Fire_SCD = Fire_CD;
-            anim.SetTrigger("GroundFire");
-            Instantiate(FireBall,ShootPoint.position,transform.rotation);
+            if(Time.time >= (Z_Attack_CD + Z_Last_Time))
+            {
+                if(PlayerMovement.isOnGround)
+                {
+                    Z_Last_Time = Time.time;
+                    anim.SetTrigger("IsAttack");
+                }
+                else if(!PlayerMovement.isOnGround)
+                {
+                    Z_Last_Time = Time.time;
+                    anim.SetTrigger("IsAttack");
+                }
+            }
         }
 
-        if(Z_Attack_SCD >0)
+        if(Input.GetKeyDown(KeyCode.F) && !PlayerMovement.isCrouch) //當按下F鍵
         {
-            Z_Attack_SCD -= Time.deltaTime;
-        }
-
-        if(Fire_SCD >0)
-        {
-            Fire_SCD -= Time.deltaTime;
+            if(Time.time >= (Fire_CD + Fire_Last_Time)) //冷卻完成
+            {
+                if(PlayerMovement.isOnGround) //在地面
+                {
+                    Fire_Last_Time = Time.time;
+                    anim.SetTrigger("GroundFire");
+                    Instantiate(FireBall,ShootPoint.position,transform.rotation);
+                }
+                else if(!PlayerMovement.isOnGround) //在空中
+                {
+                    Fire_Last_Time = Time.time;
+                    anim.SetTrigger("JumpFire");
+                    Instantiate(FireBall,ShootPoint.position,transform.rotation);
+                }
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.C))
