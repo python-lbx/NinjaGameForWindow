@@ -120,7 +120,6 @@ public class BossABehavior : MonoBehaviour
             if(time == 4)
             {
                 //重置數值
-                transform.localScale = new Vector3(1,1,1); //變小
                 time = 0;
                 phaseTime = 15;
                 CancelInvoke("ChangePos");
@@ -177,6 +176,7 @@ public class BossABehavior : MonoBehaviour
 
     void trans()
     {
+        transform.localScale = new Vector3(1,1,1); //變小
         BossA_Status = Status.Transform;
         BossB.phaseTime = 2f; //2秒後橫衝
         BossB.BossB_Status = BossBbehaviour.Status.HRush;
