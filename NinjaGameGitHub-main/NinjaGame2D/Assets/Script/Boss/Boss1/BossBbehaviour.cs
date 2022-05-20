@@ -41,12 +41,13 @@ public class BossBbehaviour : MonoBehaviour
         BossA = GameObject.Find("BossA").GetComponent<BossABehavior>();
         BossBRndPos = Random.Range(0,4); //隨機點設定
 
-        //巡邏
-        phaseTime = 5; //巡邏階段時間
-        //BossB_Status = Status.patrol; //巡邏階段
+        movePos.position =  GetRandomPos();
+        WaitTime = startWaitTime;
+
+        //靜止
+        phaseTime = 5; //靜止階段時間
 
         BossB_Status = Status.Idle;
-        //BossB_Status = Status.CircleMove;
     }
 
     // Update is called once per frame
@@ -55,6 +56,7 @@ public class BossBbehaviour : MonoBehaviour
         switch(BossB_Status)
         {
             case Status.Idle:
+                gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
             break;
             
             case Status.Transform: //轉送待機
@@ -62,46 +64,48 @@ public class BossBbehaviour : MonoBehaviour
             break;
 
             case Status.Transform_I: 
-            if(phaseTime >0)
-            {
-                phaseTime -= Time.deltaTime;
-                transform.position = transformPoint.position; //時間內固定在傳送點
-            }
-            else if(phaseTime <= 0)
-            {
-                phaseTime=5;
-                BossA.phaseTime = 5;
-                
-                BossB_Status = Status.CircleMove;
-                BossA.BossA_Status = BossABehavior.Status.CircleMove;
-            }
+                if(phaseTime >0) //5秒後圓運動
+                {
+                    phaseTime -= Time.deltaTime;
+                    transform.position = transformPoint.position; //時間內固定在傳送點
+                }
+                else if(phaseTime <= 0)
+                {
+                    phaseTime=5;//5秒圓運動
+
+                    BossB_Status = Status.CircleMove;
+                    BossA.BossA_Status = BossABehavior.Status.CircleMove;
+                }
             break;
 
             case Status.patrol:
+                gameObject.layer = LayerMask.NameToLayer("BossCollable");
                 RndPatrol(); //時間內巡邏
             break;
 
             case Status.HRush:
-            if(time == 4)
-            {
-                time = 0;
-                phaseTime =5;
-                BossB_Status = Status.Transform_I;
-            }
-            else
-            {
-                if(phaseTime<=0)
+                gameObject.layer = LayerMask.NameToLayer("BossCollable");
+                if(time == 4)
                 {
-                    HorizontalRush();
+                    time = 0;
+                    phaseTime =5;
+                    BossB_Status = Status.Transform_I;
                 }
                 else
                 {
-                    phaseTime -= Time.deltaTime;
+                    if(phaseTime<=0)
+                    {
+                        HorizontalRush();
+                    }
+                    else
+                    {
+                        phaseTime -= Time.deltaTime;
+                    }
                 }
-            }
             break;
 
             case Status.CircleMove:
+                gameObject.layer = LayerMask.NameToLayer("BossCollable");
                 if(phaseTime >0)
                 {
                     phaseTime -= Time.deltaTime;
@@ -118,7 +122,7 @@ public class BossBbehaviour : MonoBehaviour
                     BossA.BossA_Status = BossABehavior.Status.patrol;
 
                     phaseTime = 5;
-                    BossA.phaseTime = 5;
+                    BossA.phaseTime = 15;//巡邏時間
                 }
             break;
             

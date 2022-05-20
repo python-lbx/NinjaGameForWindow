@@ -42,6 +42,7 @@ public class PlayerHealthController : MonoBehaviour
             if(Time.time >= (hurtlast_time+ hurtCD))
             {
                 isHurt = false;
+                gameObject.layer = LayerMask.NameToLayer("Player");
             }
         }
 
@@ -63,16 +64,17 @@ public class PlayerHealthController : MonoBehaviour
     {
         if(PlayerColl.gameObject.tag == "Enemy")
         {               
+            gameObject.layer = LayerMask.NameToLayer("Invincible");
             isHurt = true;
             hurtlast_time = Time.time;
             //Health_Current -= GameObject.FindObjectOfType<Enemy_Health_Test>().Damage;
             if(transform.position.x < PlayerColl.gameObject.transform.position.x)
             {
-                rb.velocity = new Vector2(-2f,rb.velocity.y);
+                rb.velocity = new Vector2(-3f,rb.velocity.y);
             }
             else if(transform.position.x > PlayerColl.gameObject.transform.position.x)
             {
-                rb.velocity = new Vector2(2f,rb.velocity.y);
+                rb.velocity = new Vector2(3f,rb.velocity.y);
             }
         }
     }

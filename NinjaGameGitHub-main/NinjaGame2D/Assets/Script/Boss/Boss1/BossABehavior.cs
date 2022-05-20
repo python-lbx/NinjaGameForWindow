@@ -48,13 +48,12 @@ public class BossABehavior : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         BossB = GameObject.Find("BossB").GetComponent<BossBbehaviour>();
         
+        //隨機點與等待時間重置
+        movePos.position =  GetRandomPos();
         WaitTime = startWaitTime;
-        //巡邏
-        phaseTime = 5; //巡邏階段時間
-        //BossA_Status = Status.patrol; //巡邏階段
-
+        //靜止
+        phaseTime = 5; 
         BossA_Status = Status.Idle;
-        //BossA_Status = Status.CircleMove;
 
 
     }
@@ -66,13 +65,14 @@ public class BossABehavior : MonoBehaviour
         switch (BossA_Status)
         {
             case Status.Idle:
-            if(phaseTime > 0)
+            gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+            if(phaseTime > 0) //5秒後進入戰鬥
             {
                 phaseTime -= Time.deltaTime;
             }
             else if(phaseTime <= 0)
             {        
-                phaseTime = 5; //巡邏階段時間
+                phaseTime = 15; //巡邏階段時間
                 BossA_Status = Status.patrol;
                 BossB.BossB_Status = BossBbehaviour.Status.patrol;
             }
@@ -83,8 +83,9 @@ public class BossABehavior : MonoBehaviour
             break;
 
             case Status.Transform_I:
-                if(phaseTime > 0)
+                if(phaseTime > 0) //2秒後墜落
                 {
+                    rb.velocity = new Vector2(0,0);
                     transform.position = transformPoint.position; //時間內固定在傳送點
                     phaseTime -= Time.deltaTime;
                 }
@@ -96,32 +97,40 @@ public class BossABehavior : MonoBehaviour
             break;
 
             case Status.patrol:
+            gameObject.layer = LayerMask.NameToLayer("BossCollable");
             if(phaseTime>0)
             {
-                
                 RndPatrol();
                 phaseTime -= Time.deltaTime;
             }
             else if(phaseTime<=0)
             {
+                //重置數值
                 WaitTime = startWaitTime;
                 phaseTime = 2;
+                //狀態切換
                 BossA_Status = Status.Transform_I;
                 BossB.BossB_Status = BossBbehaviour.Status.Transform;
             }
             break;
 
             case Status.Fall:
+            gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+            transform.localScale = new Vector3(2,2,1);//變大
             if(time == 4)
             {
+                //重置數值
+                transform.localScale = new Vector3(1,1,1); //變小
                 time = 0;
-                phaseTime = 5;
+                phaseTime = 15;
                 CancelInvoke("ChangePos");
-                Invoke("trans",2f);
+                Invoke("trans",2f); //2秒後傳送待機
             }
             break;
 
             case Status.CircleMove:
+            gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+            rb.velocity = new Vector2(0,0);
             transform.position = Center.position;
             rb.gravityScale = 0;
             break;
@@ -169,7 +178,7 @@ public class BossABehavior : MonoBehaviour
     void trans()
     {
         BossA_Status = Status.Transform;
-        BossB.phaseTime = 2f;
+        BossB.phaseTime = 2f; //2秒後橫衝
         BossB.BossB_Status = BossBbehaviour.Status.HRush;
         BossB.transform.position = BossB.point[BossB.BossBRndPos].transform.position;
         CancelInvoke("trans");

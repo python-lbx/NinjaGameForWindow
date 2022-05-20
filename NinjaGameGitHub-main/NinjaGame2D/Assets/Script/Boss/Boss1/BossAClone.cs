@@ -18,11 +18,7 @@ public class BossAClone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(bossA.time == 4)
-        {
-            gameObject.SetActive(false);
-            transform.position = startpos;
-        }*/
+
     }
 
     public void ResetPos()
