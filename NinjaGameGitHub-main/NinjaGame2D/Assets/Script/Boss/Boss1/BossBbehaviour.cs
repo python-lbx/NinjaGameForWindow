@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossBbehaviour : MonoBehaviour
 {
+    public Animator anim;
     public Transform transformPoint;
     public BossABehavior BossA;
     [Header("巡邏")]
@@ -38,6 +39,7 @@ public class BossBbehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         BossA = GameObject.Find("BossA").GetComponent<BossABehavior>();
         BossBRndPos = Random.Range(0,4); //隨機點設定
 
@@ -195,5 +197,10 @@ public class BossBbehaviour : MonoBehaviour
         {
             angle = 0;
         }
+    }
+
+    void firstTrans()
+    {
+        BossB_Status = Status.Transform;
     }
 }

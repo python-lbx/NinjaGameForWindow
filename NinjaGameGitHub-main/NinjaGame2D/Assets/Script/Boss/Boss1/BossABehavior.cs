@@ -6,6 +6,7 @@ public class BossABehavior : MonoBehaviour
 {
     BoxCollider2D boxcoll;
     Rigidbody2D rb;
+    public Animator anim;
 
     public BossBbehaviour BossB;
 
@@ -20,6 +21,8 @@ public class BossABehavior : MonoBehaviour
     public float timer;
     public float timerstart;
     public int time;
+
+    public int IsEyeOpen;
 
     [Header("巡邏")]
     public float speed;
@@ -46,6 +49,7 @@ public class BossABehavior : MonoBehaviour
     {
         boxcoll = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         BossB = GameObject.Find("BossB").GetComponent<BossBbehaviour>();
         
         //隨機點與等待時間重置
@@ -54,14 +58,11 @@ public class BossABehavior : MonoBehaviour
         //靜止
         phaseTime = 5; 
         BossA_Status = Status.Idle;
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         switch (BossA_Status)
         {
             case Status.Idle:
@@ -75,6 +76,8 @@ public class BossABehavior : MonoBehaviour
                 phaseTime = 15; //巡邏階段時間
                 BossA_Status = Status.patrol;
                 BossB.BossB_Status = BossBbehaviour.Status.patrol;
+                BossB.anim.SetBool("BattleStart",true);
+                anim.SetBool("BattleStart",true);
             }
             break;
 
@@ -109,8 +112,9 @@ public class BossABehavior : MonoBehaviour
                 WaitTime = startWaitTime;
                 phaseTime = 2;
                 //狀態切換
-                BossA_Status = Status.Transform_I;
-                BossB.BossB_Status = BossBbehaviour.Status.Transform;
+                //BossA_Status = Status.Transform_I;
+                anim.SetTrigger("Trans");
+                BossB.anim.SetTrigger("Trans");
             }
             break;
 
@@ -140,6 +144,8 @@ public class BossABehavior : MonoBehaviour
     {
         rb.gravityScale = 1;
         RangePos = Random.Range(0,5);
+        IsEyeOpen = Random.Range(0,2);
+        anim.SetInteger("IsEyeOpen",IsEyeOpen);
 
         for(i=0;i<5;i++)
         {
@@ -182,6 +188,11 @@ public class BossABehavior : MonoBehaviour
         BossB.BossB_Status = BossBbehaviour.Status.HRush;
         BossB.transform.position = BossB.point[BossB.BossBRndPos].transform.position;
         CancelInvoke("trans");
+    }
+
+    void firsttrans()
+    {
+        BossA_Status = Status.Transform_I;
     }
 
     Vector2 GetRandomPos()

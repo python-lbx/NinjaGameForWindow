@@ -1705,6 +1705,7 @@ GameObject:
   - component: {fileID: 1408363791}
   - component: {fileID: 1408363793}
   - component: {fileID: 1408363792}
+  - component: {fileID: 1408363794}
   m_Layer: 7
   m_Name: BossA
   m_TagString: Enemy
@@ -1789,6 +1790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e5b86a8beda3247ad487a6a147c043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   BossB: {fileID: 0}
   transformPoint: {fileID: 200939209}
   Clones:
@@ -1802,6 +1804,7 @@ MonoBehaviour:
   timer: 2
   timerstart: 0
   time: 0
+  IsEyeOpen: 0
   speed: 5
   startWaitTime: 2
   WaitTime: 0
@@ -1860,6 +1863,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!95 &1408363794
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408363788}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 58a13d6604b873d44978ebe3ac4ce773, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1491944986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,6 +1961,7 @@ GameObject:
   - component: {fileID: 1498340723}
   - component: {fileID: 1498340727}
   - component: {fileID: 1498340726}
+  - component: {fileID: 1498340728}
   m_Layer: 7
   m_Name: BossB
   m_TagString: Enemy
@@ -1958,6 +1981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3d74ad5fa9af44187cf92a18e7c36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   transformPoint: {fileID: 200939209}
   BossA: {fileID: 0}
   Patrolspeed: 5
@@ -2094,6 +2118,25 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!95 &1498340728
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498340722}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5cc81cf9036666f4fbe95359b540463b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1624765592
 GameObject:
   m_ObjectHideFlags: 0
