@@ -22,14 +22,18 @@ public class PlayerHealthController : MonoBehaviour
     public Text MP_Text;
     CapsuleCollider2D capsulecoll;
     Rigidbody2D rb;
-
     Animator anim;
+    SpriteRenderer SR;
+    Color originalColor;
     // Start is called before the first frame update
     void Start()
     {
         capsulecoll = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        SR = GetComponent<SpriteRenderer>();
+
+        originalColor = SR.color;
 
         Health_Current = Health_Max;
     }
@@ -43,6 +47,7 @@ public class PlayerHealthController : MonoBehaviour
             {
                 isHurt = false;
                 gameObject.layer = LayerMask.NameToLayer("Player");
+                SR.color = originalColor;
             }
         }
 
@@ -65,17 +70,18 @@ public class PlayerHealthController : MonoBehaviour
         if(PlayerColl.gameObject.tag == "Enemy")
         {               
             gameObject.layer = LayerMask.NameToLayer("Invincible");
+            SR.color = new Color(1,1,1,0.5f);
             isHurt = true;
             hurtlast_time = Time.time;
             //Health_Current -= GameObject.FindObjectOfType<Enemy_Health_Test>().Damage;
-            if(transform.position.x < PlayerColl.gameObject.transform.position.x)
+            /*if(transform.position.x < PlayerColl.gameObject.transform.position.x)
             {
                 rb.velocity = new Vector2(-3f,rb.velocity.y);
             }
             else if(transform.position.x > PlayerColl.gameObject.transform.position.x)
             {
                 rb.velocity = new Vector2(3f,rb.velocity.y);
-            }
+            }*/
         }
     }
 

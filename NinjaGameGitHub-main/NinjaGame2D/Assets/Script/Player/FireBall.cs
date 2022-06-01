@@ -29,7 +29,7 @@ public class FireBall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.CompareTag("Boss"))
+        if(other.CompareTag("Enemy"))
         {
             FindObjectOfType<BossHealthController>().Health_Current -= damage;
             coll.enabled = false;

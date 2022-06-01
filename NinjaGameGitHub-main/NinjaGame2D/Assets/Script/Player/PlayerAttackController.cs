@@ -84,6 +84,15 @@ public class PlayerAttackController : MonoBehaviour
                 ReadyToDash();
             }
         }
+
+        if(playerHealth.isHurt)
+        {
+            return;
+        }
+        if(Time.time >=(LastDash + 0.5f))
+        {
+            gameObject.layer = LayerMask.NameToLayer("Player");
+        }
     }
 
     private void FixedUpdate() 
@@ -124,7 +133,6 @@ public class PlayerAttackController : MonoBehaviour
             else if(dashTimeLeft <= 0)
             {
                 Dashing = false;
-                gameObject.layer = LayerMask.NameToLayer("Player");
             }
              
         }

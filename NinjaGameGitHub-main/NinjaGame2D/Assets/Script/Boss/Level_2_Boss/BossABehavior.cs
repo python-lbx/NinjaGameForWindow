@@ -56,15 +56,19 @@ public class BossABehavior : MonoBehaviour
         movePos.position =  GetRandomPos();
         WaitTime = startWaitTime;
         //靜止
-        phaseTime = 5; 
-        BossA_Status = Status.Idle;
+        //phaseTime = 5; 
+        //BossA_Status = Status.Idle;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {            
+
+        anim.SetInteger("IsEyeOpen",IsEyeOpen);
+    
         switch (BossA_Status)
         {
+            
             case Status.Idle:
             gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
             if(phaseTime > 0) //5秒後進入戰鬥
@@ -72,17 +76,18 @@ public class BossABehavior : MonoBehaviour
                 phaseTime -= Time.deltaTime;
             }
             else if(phaseTime <= 0)
-            {        
+            {   
                 phaseTime = 15; //巡邏階段時間
                 BossA_Status = Status.patrol;
                 BossB.BossB_Status = BossBbehaviour.Status.patrol;
                 BossB.anim.SetBool("BattleStart",true);
-                anim.SetBool("BattleStart",true);
+                IsEyeOpen = 2;
             }
             break;
 
             case Status.Transform: //什麼也不做
                 transform.position = transformPoint.position; //時間內固定在傳送點
+                IsEyeOpen = 2;
             break;
 
             case Status.Transform_I:
@@ -93,7 +98,7 @@ public class BossABehavior : MonoBehaviour
                     phaseTime -= Time.deltaTime;
                 }
                 else if(phaseTime <= 0)
-                {
+                {                    
                     ChangePos();
                     BossA_Status = Status.Fall;
                 }
@@ -145,7 +150,6 @@ public class BossABehavior : MonoBehaviour
         rb.gravityScale = 1;
         RangePos = Random.Range(0,5);
         IsEyeOpen = Random.Range(0,2);
-        anim.SetInteger("IsEyeOpen",IsEyeOpen);
 
         for(i=0;i<5;i++)
         {
@@ -193,6 +197,7 @@ public class BossABehavior : MonoBehaviour
     void firsttrans()
     {
         BossA_Status = Status.Transform_I;
+        IsEyeOpen = 0;
     }
 
     Vector2 GetRandomPos()

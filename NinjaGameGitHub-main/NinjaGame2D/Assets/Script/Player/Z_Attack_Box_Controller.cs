@@ -24,7 +24,7 @@ public class Z_Attack_Box_Controller : MonoBehaviour
             FindObjectOfType<Enemy_Health_Test>().Health -= Damage;
         }*/
 
-        if(ZBox.CompareTag("Boss"))
+        if(ZBox.CompareTag("Enemy"))
         {
             FindObjectOfType<BossHealthController>().Health_Current -= Damage;
         }

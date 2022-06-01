@@ -62,7 +62,7 @@ public class PlayerMovementController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(PlayerHP.isHurt || PlayerAC.Dashing)
+        if(PlayerAC.Dashing)
         {
             return;
         }
@@ -97,7 +97,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         animController();
         PhysicalCheck();
-        if(isHeadBlock&&isCrouch&&isOnGround || PlayerHP.isHurt)
+        if(isHeadBlock&&isCrouch&&isOnGround)
         {
             return;
         }
@@ -106,7 +106,6 @@ public class PlayerMovementController : MonoBehaviour
         if(PlayerHP.isHurt)
         {
             PlayerAC.Dashing = false;
-            rb.velocity = new Vector2(0,0);
         }
     }
 
