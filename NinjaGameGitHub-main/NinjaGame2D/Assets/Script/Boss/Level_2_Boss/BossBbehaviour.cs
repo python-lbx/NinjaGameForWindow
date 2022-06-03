@@ -145,6 +145,7 @@ public class BossBbehaviour : MonoBehaviour
             case Status.Death:
                 rb.velocity = new Vector2(0,0);
                 rb.gravityScale = 1;
+                anim.SetTrigger("Dead");
             break;
         }
 
@@ -230,6 +231,11 @@ public class BossBbehaviour : MonoBehaviour
     void firstTrans()
     {
         BossB_Status = Status.Transform;
+    }
+
+    public void DeadAnim()
+    {
+        Destroy(this.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D other) 
