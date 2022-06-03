@@ -32,13 +32,13 @@ public class Level_2_BossHP : MonoBehaviour
         switch(HP_Status)
         {
             case Status.Ready:
-                if(Health_Current <= 100)
+                if(Health_Current <= Health_Max)
                 {
                     Health_Current += Time.time/10 ;
                 }
-                else if(Health_Current >= 100)
+                else if(Health_Current >= Health_Max)
                 {
-                    Health_Current = 100;
+                    Health_Current = Health_Max;
                     HP_Status = Status.Go;
                 }
             break;

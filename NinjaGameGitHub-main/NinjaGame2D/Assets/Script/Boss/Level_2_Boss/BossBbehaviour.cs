@@ -7,6 +7,12 @@ public class BossBbehaviour : MonoBehaviour
     public Animator anim;
     public Transform transformPoint;
     public BossABehavior BossA;
+    public PlayerHealthController playerHealth;
+    Rigidbody2D rb;
+    Collider2D coll;
+    public int damage;
+
+
     [Header("巡邏")]
     public float Patrolspeed;
     public float startWaitTime;
@@ -27,7 +33,7 @@ public class BossBbehaviour : MonoBehaviour
     public bool phase;
     public float phaseTime;
     public float StartphaseTime;
-    public enum Status {Idle,patrol,CircleMove,HRush,Transform,Transform_I};
+    public enum Status {Idle,patrol,CircleMove,HRush,Transform,Transform_I,Death};
     public Status BossB_Status;
 
     
@@ -40,6 +46,9 @@ public class BossBbehaviour : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
+        rb= GetComponent<Rigidbody2D>();
+        playerHealth = GameObject.FindObjectOfType<PlayerHealthController>();
         BossA = GameObject.Find("BossA").GetComponent<BossABehavior>();
         BossBRndPos = Random.Range(0,4); //隨機點設定
 
@@ -55,6 +64,8 @@ public class BossBbehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var bossHP = GameObject.FindObjectOfType<BossHealthController>();
+
         switch(BossB_Status)
         {
             case Status.Idle:
@@ -81,11 +92,13 @@ public class BossBbehaviour : MonoBehaviour
             break;
 
             case Status.patrol:
+                damage = 2;
                 gameObject.layer = LayerMask.NameToLayer("BossCollable");
                 RndPatrol(); //時間內巡邏
             break;
 
             case Status.HRush:
+                damage = 4;
                 gameObject.layer = LayerMask.NameToLayer("BossCollable");
                 if(time == 4)
                 {
@@ -107,6 +120,7 @@ public class BossBbehaviour : MonoBehaviour
             break;
 
             case Status.CircleMove:
+                damage = 4;
                 gameObject.layer = LayerMask.NameToLayer("BossCollable");
                 if(phaseTime >0)
                 {
@@ -128,6 +142,20 @@ public class BossBbehaviour : MonoBehaviour
                 }
             break;
             
+            case Status.Death:
+                rb.velocity = new Vector2(0,0);
+                rb.gravityScale = 1;
+            break;
+        }
+
+        if(playerHealth.Health_Current <= 0)
+        {
+            this.enabled = false;
+        }
+        if(bossHP.Died)
+        {
+            transform.position = movePos.position;
+            BossB_Status = Status.Death;
         }
  
     }
@@ -202,5 +230,13 @@ public class BossBbehaviour : MonoBehaviour
     void firstTrans()
     {
         BossB_Status = Status.Transform;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) 
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            playerHealth.Health_Current -= damage;
+        }
     }
 }

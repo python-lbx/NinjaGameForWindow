@@ -5,28 +5,51 @@ using UnityEngine.UI;
 
 public class BossHealthController : MonoBehaviour
 {
-    public int Health_Max;
-    public int Health_Current;
+    public float Health_Max;
+    public float Health_Current;
     
     public Image HP_Image;
     public Text HP_Text;
-    
+    public bool Died;
+
+    public enum Status {Ready,Go};
+    public Status HP_Status;
+
+    private void Awake() 
+    {
+        HP_Status = Status.Ready;
+        Health_Current = 1;    
+    }
     // Start is called before the first frame update
     void Start()
     {
-        Health_Current = Health_Max;
     }
 
     // Update is called once per frame
     void Update()
     {
         HP_Image.fillAmount = (float)Health_Current/(float)Health_Max;
-        HP_Text.text = Health_Current.ToString() + "/" + Health_Max.ToString(); 
+        HP_Text.text = Health_Current.ToString() + "/" + Health_Max.ToString();
 
-        if(Health_Current <= 0)
+        switch(HP_Status)
         {
-            Health_Current = 0;
-            FindObjectOfType<BossBehaviour>().BossStatus = BossBehaviour.Status.Death;
+            case Status.Ready:
+                if(Health_Current <= Health_Max)
+                {
+                    Health_Current += Time.time/10 ;
+                }
+                else if(Health_Current >= Health_Max)
+                {
+                    Health_Current = Health_Max;
+                    HP_Status = Status.Go;
+                }
+            break;
+            case Status.Go:
+                if(Health_Current <= 0)
+                {
+                    Died = true;
+                }
+            break;
         }
     }
 }

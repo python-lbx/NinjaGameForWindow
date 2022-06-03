@@ -36,7 +36,7 @@ public class BossBehaviour : MonoBehaviour
     //階段時間
     public float phaseTime;
     public float StartphaseTime;
-    public enum  Status {Patrol,Shoot,Dash,Jump,Death}
+    public enum  Status {Prepare,Patrol,Shoot,Dash,Jump,Death}
     public Status BossStatus;
 
 
@@ -62,10 +62,23 @@ public class BossBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var bossHP = GameObject.FindObjectOfType<BossHealthController>();
         animController();
 
         switch(BossStatus)
-        {
+        {   
+            case Status.Prepare:
+            if(bossHP.Health_Current == bossHP.Health_Max)
+            {   
+                anim.SetBool("Go",true);
+                gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+                BossStatus = Status.Patrol;
+            }
+            else
+            {
+                gameObject.layer = LayerMask.NameToLayer("BossInvincible");
+            }
+            break;
             case Status.Patrol:
             if(StartphaseTime > 0)
             {
@@ -147,6 +160,18 @@ public class BossBehaviour : MonoBehaviour
             coll.enabled = false;
             anim.SetTrigger("Death");
             break;
+        }
+
+        if(FindObjectOfType<BossHealthController>().Died)
+        {
+            BossStatus = Status.Death;
+        }
+
+        if(FindObjectOfType<PlayerHealthController>().Health_Current <= 0)
+        {   
+            rb.velocity = new Vector2(0,0);
+            anim.SetBool("GameOver",true);
+            this.enabled = false;
         }
     }
 

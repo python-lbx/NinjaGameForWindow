@@ -54,9 +54,7 @@ public class PlayerHealthController : MonoBehaviour
         if(Health_Current<=0)
         {
             isHurt = false;
-            FindObjectOfType<BossBehaviour>().enabled = false;
-            FindObjectOfType<BossBehaviour>().rb.velocity = new Vector2(0,0);
-            //GameOver.SetActive(true);
+
             Health_Current = 0;
             anim.SetTrigger("Dead");
         }

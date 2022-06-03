@@ -7,7 +7,10 @@ public class BossAClone : MonoBehaviour
     public BossABehavior bossA;
     BoxCollider2D boxcoll;
     Animator anim;
+    PlayerHealthController playerHealth;
     public Vector3 startpos;
+
+    public int damage;
 
     public float collPlayer_CDTime;
     public float collPlayer_LastCDTime;
@@ -17,6 +20,7 @@ public class BossAClone : MonoBehaviour
         bossA = GameObject.Find("BossA").GetComponent<BossABehavior>();
         anim = GetComponent<Animator>();
         boxcoll = GetComponent<BoxCollider2D>();
+        playerHealth = GameObject.FindObjectOfType<PlayerHealthController>();
         startpos = new Vector3(transform.position.x,5,transform.position.z);
 
         if(bossA.IsEyeOpen == 0)
@@ -66,7 +70,9 @@ public class BossAClone : MonoBehaviour
         else if(other.gameObject.tag == "Player")
         {
             gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+            playerHealth.Health_Current -= damage;
             collPlayer_LastCDTime = Time.time;
+            
         }
     }
 }

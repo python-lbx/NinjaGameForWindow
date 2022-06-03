@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Level_2_Boss_Bridge : MonoBehaviour
 {
-    BossABehavior bossA;
+    BossHealthController bossHealth;
     Collider2D coll;
 
     public GameObject Bridge;
@@ -12,7 +12,7 @@ public class Level_2_Boss_Bridge : MonoBehaviour
     void Start()
     {
         coll = GetComponent<Collider2D>();
-        bossA = GameObject.Find("BossA").GetComponent<BossABehavior>();
+        bossHealth = GameObject.FindObjectOfType<BossHealthController>();
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class Level_2_Boss_Bridge : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             Destroy(Bridge);
-            bossA.enabled = true;
+            bossHealth.enabled = true;
         }
     }
 }

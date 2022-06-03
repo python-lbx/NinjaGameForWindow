@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Enemy
   - Ground
-  - Boss
   layers:
   - Default
   - TransparentFX
@@ -20,7 +19,7 @@ TagManager:
   - Player
   - Invincible
   - BossCollable
-  - 
+  - BossInvincible
   - 
   - 
   - 

@@ -6,11 +6,14 @@ public class BossABehavior : MonoBehaviour
 {
     BoxCollider2D boxcoll;
     Rigidbody2D rb;
+    PlayerHealthController playerHealth;
+
     public Animator anim;
 
     public BossBbehaviour BossB;
 
     public Transform transformPoint;
+    public int damage;
 
     [Header("克隆體")]
     //public GameObject BossAClone;
@@ -41,7 +44,7 @@ public class BossABehavior : MonoBehaviour
     public bool phase;
     public float phaseTime;
     public float StartphaseTime;
-    public enum Status {Idle,patrol,Fall,CircleMove,Transform,Transform_I,Transform_II};
+    public enum Status {Prepare,patrol,Fall,CircleMove,Transform,Transform_I,Transform_II,Death};
     public Status BossA_Status;
     
     // Start is called before the first frame update
@@ -51,6 +54,7 @@ public class BossABehavior : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         BossB = GameObject.Find("BossB").GetComponent<BossBbehaviour>();
+        playerHealth = GameObject.FindObjectOfType<PlayerHealthController>();
         
         //隨機點與等待時間重置
         movePos.position =  GetRandomPos();
@@ -63,25 +67,26 @@ public class BossABehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {            
+        var bossHP = GameObject.FindObjectOfType<BossHealthController>();
 
         anim.SetInteger("IsEyeOpen",IsEyeOpen);
     
         switch (BossA_Status)
         {
-            
-            case Status.Idle:
-            gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
-            if(phaseTime > 0) //5秒後進入戰鬥
+            case Status.Prepare:
+            if(bossHP.Health_Current == bossHP.Health_Max)
             {
-                phaseTime -= Time.deltaTime;
-            }
-            else if(phaseTime <= 0)
-            {   
+                gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+
                 phaseTime = 15; //巡邏階段時間
                 BossA_Status = Status.patrol;
                 BossB.BossB_Status = BossBbehaviour.Status.patrol;
                 BossB.anim.SetBool("BattleStart",true);
                 IsEyeOpen = 2;
+            }
+            else
+            {   
+                gameObject.layer = LayerMask.NameToLayer("BossInvincible");
             }
             break;
 
@@ -105,6 +110,7 @@ public class BossABehavior : MonoBehaviour
             break;
 
             case Status.patrol:
+            damage = 2;
             gameObject.layer = LayerMask.NameToLayer("BossCollable");
             if(phaseTime>0)
             {
@@ -137,11 +143,29 @@ public class BossABehavior : MonoBehaviour
             break;
 
             case Status.CircleMove:
-            gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+            damage = 2;
+            gameObject.layer = LayerMask.NameToLayer("BossCollable");
             rb.velocity = new Vector2(0,0);
             transform.position = Center.position;
             rb.gravityScale = 0;
             break;
+
+            case Status.Death:
+            rb.velocity = new Vector2(0,0);
+            rb.gravityScale = 1;
+            break;
+        }
+
+        if(playerHealth.Health_Current <= 0)
+        {
+            rb.velocity = new Vector2(0,0);
+            this.enabled = false;
+        }
+
+        if(bossHP.Died)
+        {   
+            transform.position = movePos.position;
+            BossA_Status = Status.Death;
         }
     }
 
@@ -208,10 +232,18 @@ public class BossABehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if(BossA_Status == Status.Fall && time < 4)
+        if(other.gameObject.tag == "Ground")
         {
-            Invoke("ChangePos",2f);
-            time++;
+            if(BossA_Status == Status.Fall && time < 4)
+            {
+                Invoke("ChangePos",2f);
+                time++;
+            }
+        }
+
+        else if(other.gameObject.tag == "Player")
+        {
+            playerHealth.Health_Current -= damage;
         }
     }
 }
