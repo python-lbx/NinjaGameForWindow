@@ -6,6 +6,7 @@ public class Knight_Boss : MonoBehaviour
 {
     Rigidbody2D rb;
     Collider2D coll;
+    Collider2D obj;
     [SerializeField]Transform meleedetectbox;
     [SerializeField]Vector2 boxsize;
     [SerializeField]LayerMask playerLayer;
@@ -15,6 +16,9 @@ public class Knight_Boss : MonoBehaviour
 
     public bool faceright;
     public float speed;
+
+    public float meleeAttackCoolDown;
+    public float meleeAttackLastTime;
 
     public GameObject bullet;
     public Transform shootpoint;
@@ -38,13 +42,19 @@ public class Knight_Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("Speed",Mathf.Abs(rb.velocity.x) );
+
         if(Input.GetKeyDown(KeyCode.Q))
         {
             Instantiate(bullet,shootpoint.transform.position,transform.rotation);
         }
-        Movement();
+        //Movement();
         //hit = Physics2D.OverlapBox(new Vector3(meleedetectbox.position.x * direction,meleedetectbox.position.y,meleedetectbox.position.z),boxsize,0,playerLayer);
-        hit = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer);
+
+
+        Collider2D obj = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //顯示你碰撞到什麼需要用到這行代碼
+        hit = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //判斷你有沒有碰到物件
+
     }
 
     private void OnDrawGizmos() 
@@ -81,4 +91,36 @@ public class Knight_Boss : MonoBehaviour
         }
     }
 
+    //需要接著coll obj;
+    void meleeAttackDetect()
+    {
+        if(obj != null && obj.gameObject.name == "Player")
+        {   
+            //print(obj.gameObject.name);
+            if(Time.time >= (meleeAttackLastTime + meleeAttackCoolDown))
+            {
+                if(faceright)
+                {
+                    if(transform.position.x > obj.gameObject.transform.position.x)
+                    {
+                        flip();
+                    }
+                }
+                else
+                {
+                    if(transform.position.x < obj.gameObject.transform.position.x)
+                    {
+                        flip();
+                    }
+                }
+                rb.velocity = new Vector2(0,0);
+                meleeAttackLastTime = Time.time;
+                anim.SetTrigger("MeleeAttack");
+            }
+        }
+        else
+        {
+            Movement();
+        }
+    }
 }
