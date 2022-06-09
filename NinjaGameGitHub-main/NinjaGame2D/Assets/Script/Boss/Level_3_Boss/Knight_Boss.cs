@@ -6,7 +6,7 @@ public class Knight_Boss : MonoBehaviour
 {
     Rigidbody2D rb;
     Collider2D coll;
-    Collider2D obj;
+    Collider2D obj; //沒用
     [SerializeField]Transform meleedetectbox;
     [SerializeField]Vector2 boxsize;
     [SerializeField]LayerMask playerLayer;
@@ -20,15 +20,27 @@ public class Knight_Boss : MonoBehaviour
     public float meleeAttackCoolDown;
     public float meleeAttackLastTime;
 
+    public float DashCoolDown;
+    public float LastDashTime;
+    public float dashSpeed;
+    public bool Dashing;
+
+    public float TransfarCoolDown;
+    public float LastTransfar;
+    public int RanPos;
+    public Transform[] TransPoint;
+
     public GameObject bullet;
     public Transform shootpoint;
+
+    public GameObject dashwind;
+
+    public PlayerPosTest Target;
 
     [Header("移動範圍")]
     public Transform leftPoint;
     public Transform rightPoint;
 
-    public float AttackCoolDown;
-    public int damage;
 
 
     // Start is called before the first frame update
@@ -37,6 +49,8 @@ public class Knight_Boss : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+
+        Target = GameObject.FindObjectOfType<PlayerPosTest>();
     }
 
     // Update is called once per frame
@@ -55,6 +69,24 @@ public class Knight_Boss : MonoBehaviour
         Collider2D obj = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //顯示你碰撞到什麼需要用到這行代碼
         hit = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //判斷你有沒有碰到物件
 
+        if(Time.time >= (TransfarCoolDown + LastTransfar))
+        {
+            LastTransfar = Time.time;
+            RanPos = Random.Range(0,4);
+            for(var i=0;i<4;i++)
+            {
+                if(i == RanPos)
+                {
+                    transform.position = TransPoint[i].transform.position;
+                }
+            }
+            anim.SetTrigger("FirstTrans");
+        }
+    }
+
+    private void FixedUpdate() 
+    {
+        //DashMeleeAttack();
     }
 
     private void OnDrawGizmos() 
@@ -91,7 +123,7 @@ public class Knight_Boss : MonoBehaviour
         }
     }
 
-    //需要接著coll obj;
+    //需要接著coll obj; 碰撞攻擊;
     void meleeAttackDetect()
     {
         if(obj != null && obj.gameObject.name == "Player")
@@ -121,6 +153,68 @@ public class Knight_Boss : MonoBehaviour
         else
         {
             Movement();
+        }
+    }
+
+    //衝刺攻擊 毋須碰撞
+    void DashMeleeAttack()
+    {
+        if(Mathf.Abs(transform.position.x - Target.lastPos) < 1.5f)
+        {
+            dashSpeed = 0f;
+            rb.velocity = new Vector2(0,0);
+            if(Time.time >= (meleeAttackLastTime + meleeAttackCoolDown))
+            {
+                meleeAttackLastTime = Time.time;
+                anim.SetTrigger("MeleeAttack");
+            }
+        }
+        else if(Mathf.Abs(transform.position.x - Target.lastPos) > 1.5f)
+        {   
+            //(Mathf.Abs(transform.position.x - Target.currentPos));
+            dashSpeed = 50f;
+            if(Time.time >= (DashCoolDown+LastDashTime))
+            {
+                LastDashTime = Time.time;
+                dashwind.SetActive(true);
+                //print("My"+transform.position);
+                //print("T"+Target.transform.position);
+                /*if(transform.position.x > Target.lastPos) //敵人,我
+                {
+                    flip();
+                    rb.velocity = new Vector2(-dashSpeed,rb.velocity.y);
+                }
+                else if(transform.position.x < Target.lastPos) //我,敵人
+                {
+                    flip();
+                    rb.velocity = new Vector2(dashSpeed,rb.velocity.y);
+                }*/
+
+                if(faceright) //面向右 >>>>
+                {
+                    if(transform.position.x > Target.lastPos) //敵人,我
+                    {
+                        flip();
+                        rb.velocity = new Vector2(-dashSpeed,rb.velocity.y);
+                    }
+                    else if(transform.position.x < Target.lastPos) //我,敵人
+                    {
+                        rb.velocity = new Vector2(dashSpeed,rb.velocity.y);
+                    }
+                }
+                else if(!faceright) //面向左 <<<<
+                {
+                    if(transform.position.x > Target.lastPos) //敵人,我
+                    {
+                        rb.velocity = new Vector2(-dashSpeed,rb.velocity.y);
+                    }
+                    else if(transform.position.x < Target.lastPos) //我,敵人
+                    {
+                        flip();
+                        rb.velocity = new Vector2(dashSpeed,rb.velocity.y);
+                    }
+                }
+            }
         }
     }
 }
