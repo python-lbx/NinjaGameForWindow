@@ -23,12 +23,13 @@ public class Knight_Boss : MonoBehaviour
     public float DashCoolDown;
     public float LastDashTime;
     public float dashSpeed;
-    public bool Dashing;
+    public bool Striking;
 
     public float TransfarCoolDown;
     public float LastTransfar;
     public int RanPos;
     public Transform[] TransPoint;
+    public Transform AirTransPoint;
 
     public GameObject bullet;
     public Transform shootpoint;
@@ -57,6 +58,7 @@ public class Knight_Boss : MonoBehaviour
     void Update()
     {
         anim.SetFloat("Speed",Mathf.Abs(rb.velocity.x) );
+        anim.SetBool("Strike",Striking);
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
@@ -73,13 +75,6 @@ public class Knight_Boss : MonoBehaviour
         {
             LastTransfar = Time.time;
             RanPos = Random.Range(0,4);
-            for(var i=0;i<4;i++)
-            {
-                if(i == RanPos)
-                {
-                    transform.position = TransPoint[i].transform.position;
-                }
-            }
             anim.SetTrigger("FirstTrans");
         }
     }
@@ -96,6 +91,63 @@ public class Knight_Boss : MonoBehaviour
         Gizmos.DrawWireCube(meleedetectbox.transform.position,boxsize);
     }
 
+    void firstTrans()
+    {
+        transform.position = AirTransPoint.position;
+    }
+
+    void secondTrans()
+    {
+        for(var i=0;i<4;i++)
+        {
+            if(i == RanPos)
+            {
+                transform.position = TransPoint[i].transform.position;
+            }
+        }
+    }
+
+    void Strike()
+    {
+        Striking = true;
+        if(Striking)
+        {
+            dashSpeed = 25f;
+            dashwind.SetActive(true);
+
+            if(faceright) //面向右 >>>>
+            {
+                if(transform.position.x > Target.lastPos) //敵人,我
+                {
+                    flip();
+                    rb.velocity = new Vector2(-dashSpeed,rb.velocity.y);
+                }
+                else if(transform.position.x < Target.lastPos) //我,敵人
+                {
+                    rb.velocity = new Vector2(dashSpeed,rb.velocity.y);
+                }
+            }
+            else if(!faceright) //面向左 <<<<
+            {
+                if(transform.position.x > Target.lastPos) //敵人,我
+                {
+                    rb.velocity = new Vector2(-dashSpeed,rb.velocity.y);
+                }
+                else if(transform.position.x < Target.lastPos) //我,敵人
+                {
+                    flip();
+                    rb.velocity = new Vector2(dashSpeed,rb.velocity.y);
+                }
+            }
+        }
+        else
+        {
+            dashSpeed = 0f;
+            rb.velocity = new Vector2(0,0);
+        }
+        
+
+    }
     void flip()
     {
         faceright = !faceright;
@@ -215,6 +267,15 @@ public class Knight_Boss : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) 
+    {
+        print(other.gameObject.tag);
+        if(other.gameObject.tag == "AirWall")
+        {
+            Striking = false;
         }
     }
 }
