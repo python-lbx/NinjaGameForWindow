@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 3389232}
   m_Layer: 0
   m_Name: GameObject (1)
-  m_TagString: Untagged
+  m_TagString: AirWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -335,6 +335,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &423929846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 423929847}
+  m_Layer: 0
+  m_Name: AirTransPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &423929847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423929846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 11.87, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &452115050
 GameObject:
@@ -1314,7 +1344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1150771291}
   m_Layer: 0
-  m_Name: Point1 (2)
+  m_Name: Point3
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1374,7 +1404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1244324479}
   m_Layer: 0
-  m_Name: Point1 (1)
+  m_Name: Point2
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1406,7 +1436,7 @@ GameObject:
   - component: {fileID: 1249613088}
   m_Layer: 0
   m_Name: GameObject
-  m_TagString: Untagged
+  m_TagString: AirWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1726,21 +1756,24 @@ MonoBehaviour:
   DashCoolDown: 2
   LastDashTime: 0
   dashSpeed: 50
-  Dashing: 0
-  TransfarCoolDown: 2
+  Striking: 0
+  TransfarCoolDown: 4
   LastTransfar: 0
   RanPos: 0
   TransPoint:
   - {fileID: 1668241812}
+  - {fileID: 1866958580}
   - {fileID: 1244324479}
   - {fileID: 1150771291}
-  - {fileID: 1866958580}
+  AirTransPoint: {fileID: 423929847}
   bullet: {fileID: 6191868864301442259, guid: cd2b6092a71eea14cada8e4fb6318309, type: 3}
   shootpoint: {fileID: 1227598534}
   dashwind: {fileID: 813895750}
   Target: {fileID: 0}
   leftPoint: {fileID: 452115051}
   rightPoint: {fileID: 366771524}
+  SimpleStatus: 5
+  TransStatus: 0
 --- !u!1 &1866958579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,7 +1784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1866958580}
   m_Layer: 0
-  m_Name: Point1 (3)
+  m_Name: Point4
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

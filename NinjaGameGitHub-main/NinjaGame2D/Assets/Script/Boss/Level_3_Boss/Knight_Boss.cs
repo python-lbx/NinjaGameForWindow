@@ -42,6 +42,11 @@ public class Knight_Boss : MonoBehaviour
     public Transform leftPoint;
     public Transform rightPoint;
 
+    public enum Status{Idle,Patrol,Spell,DashAttack,FireBall,Strike,trans};
+    public Status SimpleStatus;
+    public Status TransStatus;
+    
+
 
 
     // Start is called before the first frame update
@@ -74,7 +79,14 @@ public class Knight_Boss : MonoBehaviour
         if(Time.time >= (TransfarCoolDown + LastTransfar))
         {
             LastTransfar = Time.time;
-            RanPos = Random.Range(0,4);
+            if(SimpleStatus == Status.Strike)
+            {
+                RanPos = Random.Range(0,4);
+            }
+            else if(SimpleStatus == Status.FireBall)
+            {
+                RanPos = Random.Range(0,2);
+            }
             anim.SetTrigger("FirstTrans");
         }
     }
