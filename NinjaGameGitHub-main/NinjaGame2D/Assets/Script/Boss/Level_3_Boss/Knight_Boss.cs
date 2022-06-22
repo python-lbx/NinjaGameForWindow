@@ -43,8 +43,8 @@ public class Knight_Boss : MonoBehaviour
     public Transform rightPoint;
 
     public enum Status{Idle,Patrol,Spell,DashAttack,FireBall,Strike,trans};
-    public Status SimpleStatus;
-    public Status TransStatus;
+    public Status current_Status;
+    public Status Next_Skill_Status;
     
 
 
@@ -79,11 +79,11 @@ public class Knight_Boss : MonoBehaviour
         if(Time.time >= (TransfarCoolDown + LastTransfar))
         {
             LastTransfar = Time.time;
-            if(SimpleStatus == Status.Strike)
+            if(Next_Skill_Status == Status.Strike)
             {
                 RanPos = Random.Range(0,4);
             }
-            else if(SimpleStatus == Status.FireBall)
+            else if(Next_Skill_Status == Status.FireBall)
             {
                 RanPos = Random.Range(0,2);
             }
@@ -119,7 +119,18 @@ public class Knight_Boss : MonoBehaviour
         }
     }
 
-    void Strike()
+    void SkillAfterTrans()
+    {
+        if(Next_Skill_Status == Status.FireBall)
+        {
+            print("stillnothing");
+        }
+        else if(Next_Skill_Status == Status.Strike)
+        {
+            Strike();
+        }
+    }
+    void Strike() 
     {
         Striking = true;
         if(Striking)
