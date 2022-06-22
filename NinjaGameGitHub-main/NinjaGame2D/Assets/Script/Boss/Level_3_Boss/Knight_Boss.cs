@@ -6,7 +6,7 @@ public class Knight_Boss : MonoBehaviour
 {
     Rigidbody2D rb;
     Collider2D coll;
-    Collider2D obj; //沒用
+    //Collider2D obj; //沒用
     [SerializeField]Transform meleedetectbox;
     [SerializeField]Vector2 boxsize;
     [SerializeField]LayerMask playerLayer;
@@ -34,6 +34,11 @@ public class Knight_Boss : MonoBehaviour
     public float FireballCoolDown;
     public float LastFireballTime;
 
+    [Header("格檔間隔")]
+    public bool Blocking;
+    public float BlockCoolDown;
+    public float BlockTimer;
+
     [Header("傳送間隔")]
     public float TransfarCoolDown;
     public float LastTransfar;
@@ -41,10 +46,16 @@ public class Knight_Boss : MonoBehaviour
     public Transform[] TransPoint;
     public Transform AirTransPoint;
 
+    [Header("施發間隔")]
+    public float SpellTimeCD;
+    public float SpellTime;
+    public bool spelling;
+
     [Header("預置物")]
     public GameObject bullet;
     public Transform shootpoint;
     public GameObject dashwind;
+    public GameObject[] SpellWind;
 
     [Header("記錄玩家位置")]
     public PlayerPosTest Target;
@@ -78,6 +89,7 @@ public class Knight_Boss : MonoBehaviour
     {
         anim.SetFloat("Speed",Mathf.Abs(rb.velocity.x) );
         anim.SetBool("Strike",Striking);
+        anim.SetBool("Block",Blocking);
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
@@ -88,9 +100,6 @@ public class Knight_Boss : MonoBehaviour
         //hit = Physics2D.OverlapBox(new Vector3(meleedetectbox.position.x * direction,meleedetectbox.position.y,meleedetectbox.position.z),boxsize,0,playerLayer);
 
 
-        Collider2D obj = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //顯示你碰撞到什麼需要用到這行代碼
-        hit = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //判斷你有沒有碰到物件
-
         
        /* if(Time.time >= (TransfarCoolDown + LastTransfar))
         {
@@ -100,11 +109,75 @@ public class Knight_Boss : MonoBehaviour
         }
         */
         //FireBallSkill();
+
+
+        //施法
+        anim.SetBool("Spelling",spelling);
+        for(var i = 0 ; i < SpellWind.Length ;i++)
+        {
+            SpellWind[i].SetActive(spelling);
+        }
+
+        if(SpellTime > 0)
+        {
+            SpellTime -= Time.deltaTime;
+            spelling = true;
+        }
+        else if(SpellTime <= 0)
+        {
+            spelling = false;
+        }
+
+
     }
 
     private void FixedUpdate() 
     {
         //DashMeleeAttack();
+    }
+
+    void blocktest()
+    {
+        Collider2D obj = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //顯示你碰撞到什麼需要用到這行代碼
+        hit = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //判斷你有沒有碰到物件
+        if(obj != null && obj.gameObject.name == "Z_Attack_Box" && Blocking)
+        {   
+            anim.SetTrigger("BlockEffect");
+            print(obj.gameObject.name);
+            if(Time.time >= (meleeAttackLastTime + meleeAttackCoolDown))
+            {
+ 
+                rb.velocity = new Vector2(0,0);
+                meleeAttackLastTime = Time.time;
+                anim.SetTrigger("MeleeAttack");
+            }
+        }
+
+        if(faceright)
+        {
+            if(transform.position.x > GameObject.Find("Player").transform.position.x)
+            {
+                flip();
+            }
+        }
+            else
+        {
+            if(transform.position.x < GameObject.Find("Player").transform.position.x)
+            {
+                flip();
+            }
+        }
+
+        if(BlockTimer > 0)
+        {
+            Blocking = true;
+            BlockTimer -= Time.deltaTime;
+        }
+        else if(BlockTimer <= 0)
+        {
+            Blocking = false;
+        }
+
     }
 
     private void OnDrawGizmos() 
@@ -260,8 +333,8 @@ public class Knight_Boss : MonoBehaviour
         }
     }
 
-    //需要接著coll obj; 碰撞攻擊;
-    void meleeAttackDetect()
+    //需要接著coll obj; 碰撞攻擊; 暫時沒用
+    /*void meleeAttackDetect()
     {
         if(obj != null && obj.gameObject.name == "Player")
         {   
@@ -291,7 +364,7 @@ public class Knight_Boss : MonoBehaviour
         {
             Movement();
         }
-    }
+    }*/
 
     //衝刺攻擊 毋須碰撞
     void DashMeleeAttack()

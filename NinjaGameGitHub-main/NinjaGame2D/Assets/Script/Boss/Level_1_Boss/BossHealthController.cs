@@ -48,6 +48,7 @@ public class BossHealthController : MonoBehaviour
                 if(Health_Current <= 0)
                 {
                     Died = true;
+                    Health_Current = 0;
                 }
             break;
         }
