@@ -14,34 +14,47 @@ public class Knight_Boss : MonoBehaviour
     [SerializeField]int direction;
     Animator anim;
 
+    [Header("角色面向")]
     public bool faceright;
+    [Header("移動速度")]
     public float speed;
 
+    [Header("近戰攻擊間隔")]
     public float meleeAttackCoolDown;
     public float meleeAttackLastTime;
 
+    [Header("衝刺攻擊間隔")]
     public float DashCoolDown;
     public float LastDashTime;
     public float dashSpeed;
     public bool Striking;
+    [Header("火球術攻擊間隔")]
+    public bool shooting;
+    public int shootingTime;
+    public float FireballCoolDown;
+    public float LastFireballTime;
 
+    [Header("傳送間隔")]
     public float TransfarCoolDown;
     public float LastTransfar;
     public int RanPos;
     public Transform[] TransPoint;
     public Transform AirTransPoint;
 
+    [Header("預置物")]
     public GameObject bullet;
     public Transform shootpoint;
-
     public GameObject dashwind;
 
+    [Header("記錄玩家位置")]
     public PlayerPosTest Target;
 
     [Header("移動範圍")]
     public Transform leftPoint;
     public Transform rightPoint;
 
+    [Header("階段")]
+    public bool inorethis;
     public enum Status{Idle,Patrol,Spell,DashAttack,FireBall,Strike,trans};
     public Status current_Status;
     public Status Next_Skill_Status;
@@ -57,6 +70,7 @@ public class Knight_Boss : MonoBehaviour
         coll = GetComponent<Collider2D>();
 
         Target = GameObject.FindObjectOfType<PlayerPosTest>();
+
     }
 
     // Update is called once per frame
@@ -67,7 +81,8 @@ public class Knight_Boss : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            Instantiate(bullet,shootpoint.transform.position,transform.rotation);
+            //Instantiate(bullet,shootpoint.transform.position,transform.rotation);
+            anim.SetTrigger("Fireshoot");
         }
         //Movement();
         //hit = Physics2D.OverlapBox(new Vector3(meleedetectbox.position.x * direction,meleedetectbox.position.y,meleedetectbox.position.z),boxsize,0,playerLayer);
@@ -76,19 +91,15 @@ public class Knight_Boss : MonoBehaviour
         Collider2D obj = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //顯示你碰撞到什麼需要用到這行代碼
         hit = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //判斷你有沒有碰到物件
 
-        if(Time.time >= (TransfarCoolDown + LastTransfar))
+        
+       /* if(Time.time >= (TransfarCoolDown + LastTransfar))
         {
             LastTransfar = Time.time;
-            if(Next_Skill_Status == Status.Strike)
-            {
-                RanPos = Random.Range(0,4);
-            }
-            else if(Next_Skill_Status == Status.FireBall)
-            {
-                RanPos = Random.Range(0,2);
-            }
+
             anim.SetTrigger("FirstTrans");
         }
+        */
+        //FireBallSkill();
     }
 
     private void FixedUpdate() 
@@ -103,13 +114,22 @@ public class Knight_Boss : MonoBehaviour
         Gizmos.DrawWireCube(meleedetectbox.transform.position,boxsize);
     }
 
-    void firstTrans()
+    /*void firstTrans()
     {
         transform.position = AirTransPoint.position;
-    }
+    }*/
 
     void secondTrans()
     {
+        if(Next_Skill_Status == Status.Strike)
+        {
+            RanPos = Random.Range(0,4);
+        }
+        else if(Next_Skill_Status == Status.FireBall)
+        {
+            RanPos = Random.Range(0,2);
+        }
+
         for(var i=0;i<4;i++)
         {
             if(i == RanPos)
@@ -123,13 +143,56 @@ public class Knight_Boss : MonoBehaviour
     {
         if(Next_Skill_Status == Status.FireBall)
         {
-            print("stillnothing");
+            shooting = true;
         }
         else if(Next_Skill_Status == Status.Strike)
         {
             Strike();
         }
     }
+
+    void FireBallshoot() //動畫用到
+    {
+        Instantiate(bullet,shootpoint.transform.position,transform.rotation);
+    }
+
+    void FireBallSkill()
+    {   
+        if(shooting)
+        {
+            if(shootingTime == 5)
+            {
+                shootingTime = 0;
+                anim.SetTrigger("FirstTrans");
+            }
+            else
+            {
+                if(Time.time >= (FireballCoolDown + LastFireballTime))
+                {
+                    LastFireballTime = Time.time;
+                    anim.SetTrigger("Fireshoot");
+                    shootingTime ++;
+                }
+            }
+        }
+        if(transform.position == TransPoint[0].transform.position)
+        {
+            //print("0");
+            if(!faceright)
+            {
+                flip();
+            }
+        }
+        else
+        {
+            //print("1");
+            if(faceright)
+            {
+                flip();
+            }
+        }
+    }
+
     void Strike() 
     {
         Striking = true;
@@ -168,9 +231,8 @@ public class Knight_Boss : MonoBehaviour
             dashSpeed = 0f;
             rb.velocity = new Vector2(0,0);
         }
-        
-
     }
+
     void flip()
     {
         faceright = !faceright;
