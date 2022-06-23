@@ -12,6 +12,8 @@ public class BossHealthController : MonoBehaviour
     public Text HP_Text;
     public bool Died;
 
+    public float rate;
+
     public enum Status {Ready,Go};
     public Status HP_Status;
 
@@ -36,7 +38,7 @@ public class BossHealthController : MonoBehaviour
             case Status.Ready:
                 if(Health_Current <= Health_Max)
                 {
-                    Health_Current += Time.time/10 ;
+                    Health_Current += Time.time/rate ;
                 }
                 else if(Health_Current >= Health_Max)
                 {

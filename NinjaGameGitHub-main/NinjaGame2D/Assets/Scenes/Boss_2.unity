@@ -834,6 +834,7 @@ MonoBehaviour:
   HP_Image: {fileID: 1864532633}
   HP_Text: {fileID: 1862395088}
   Died: 0
+  rate: 7.5
   HP_Status: 0
 --- !u!1 &413863727
 GameObject:

@@ -13,6 +13,7 @@ public class Knight_Boss : MonoBehaviour
     [SerializeField]bool hit;
     [SerializeField]int direction;
     Animator anim;
+    BossHealthController BossHP;
 
     [Header("角色面向")]
     public bool faceright;
@@ -68,7 +69,7 @@ public class Knight_Boss : MonoBehaviour
 
     [Header("階段")]
     public bool inorethis;
-    public enum Status{Idle,Patrol,Spell,DashAttack,FireBall,Strike,trans};
+    public enum Status{Prepare,Idle,Patrol,Spell,DashAttack,FireBall,Strike,trans};
     [Header("當前階段")]
     public float PhaseTimer;
     public Status current_Status;
@@ -87,8 +88,11 @@ public class Knight_Boss : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+        BossHP = GameObject.FindObjectOfType<BossHealthController>();
 
         Target = GameObject.FindObjectOfType<PlayerPosTest>();
+
+        current_Status = Status.Prepare;
 
         PhaseTimer = IdleTimer;
         SKillPhase = 4;
@@ -131,7 +135,19 @@ public class Knight_Boss : MonoBehaviour
 
         //角色階段
         switch(current_Status)
-        {
+        {   
+            case Status.Prepare:
+            if(BossHP.Health_Current == BossHP.Health_Max)
+            {
+                gameObject.layer = LayerMask.NameToLayer("BossUnCollable");
+                current_Status = Status.Idle;
+            }
+            else
+            {
+                gameObject.layer = LayerMask.NameToLayer("BossInvincible");
+            }
+            break;
+
             case Status.Idle:
             if(PhaseTimer >0)
             {
@@ -201,7 +217,7 @@ public class Knight_Boss : MonoBehaviour
                 if(Next_Skill_Status == Status.FireBall || Next_Skill_Status == Status.Strike)
                 {
                     anim.SetTrigger("FirstTrans");
-                    PhaseTimer = 2f;
+                    PhaseTimer = 3f;
                 }
                 current_Status = Next_Skill_Status;
             }
@@ -226,58 +242,43 @@ public class Knight_Boss : MonoBehaviour
                 FireBallSkill();
             }
             else if(SKillTime == 4)
-            {
+            {   
+                shooting = false;
                 SKillPhase ++;
                 SKillTime = 0;
                 PhaseTimer = IdleTimer;
                 current_Status = Status.Idle;
             }
             break;
+
             case Status.Strike:
             if(SKillTime < 4)
             {
-                if(PhaseTimer > 0)
+                if(PhaseTimer >0)
                 {
                     PhaseTimer -= Time.deltaTime;
                 }
-                else if(PhaseTimer <= 0)
+                else if(PhaseTimer <=0)
                 {
+                    PhaseTimer = 3f;
                     anim.SetTrigger("FirstTrans");
                 }
             }
-            else if(SKillTime == 4)
+            if(SKillTime == 4)
             {
                 SKillPhase ++;
                 SKillTime = 0;
                 PhaseTimer = IdleTimer;
                 current_Status = Status.Idle;
             }
-            
-            break;
-            case Status.trans:
             break;
         }
-
-        
-       /* if(Time.time >= (TransfarCoolDown + LastTransfar))
-        {
-            LastTransfar = Time.time;
-
-            anim.SetTrigger("FirstTrans");
-        }
-        */
-
-
-
-        //施法
-
-
-
     }
 
-    private void FixedUpdate() 
+    private void OnDrawGizmos() 
     {
-        //DashMeleeAttack();
+        Gizmos.color = hit? Color.red:Color.green;
+        Gizmos.DrawWireCube(meleedetectbox.transform.position,boxsize);
     }
 
     void BlockSKill()
@@ -312,18 +313,6 @@ public class Knight_Boss : MonoBehaviour
             }
         }
     }
-
-    private void OnDrawGizmos() 
-    {
-        Gizmos.color = hit? Color.red:Color.green;
-        //Gizmos.DrawWireCube(new Vector3(meleedetectbox.position.x * direction,meleedetectbox.position.y,meleedetectbox.position.z),boxsize);
-        Gizmos.DrawWireCube(meleedetectbox.transform.position,boxsize);
-    }
-
-    /*void firstTrans()
-    {
-        transform.position = AirTransPoint.position;
-    }*/
 
     void secondTrans()
     {
@@ -387,7 +376,6 @@ public class Knight_Boss : MonoBehaviour
         }
         if(transform.position == TransPoint[0].transform.position)
         {
-            //print("0");
             if(!faceright)
             {
                 flip();
@@ -395,7 +383,6 @@ public class Knight_Boss : MonoBehaviour
         }
         else
         {
-            //print("1");
             if(faceright)
             {
                 flip();
@@ -520,7 +507,6 @@ public class Knight_Boss : MonoBehaviour
         }
         else if(Mathf.Abs(transform.position.x - Target.lastPos) > 1.5f)
         {   
-            //(Mathf.Abs(transform.position.x - Target.currentPos));
             dashSpeed = 25f;
             if(Time.time >= (DashCoolDown+LastDashTime))
             {
@@ -559,8 +545,8 @@ public class Knight_Boss : MonoBehaviour
     {
         print(other.gameObject.tag);
         if(other.gameObject.tag == "AirWall" && current_Status == Status.Strike)
-        {   
-            PhaseTimer = 2f;
+        {                  
+            PhaseTimer = 3f;
             SKillTime++;
             Striking = false;
         }
