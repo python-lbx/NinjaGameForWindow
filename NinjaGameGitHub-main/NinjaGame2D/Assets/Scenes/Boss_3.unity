@@ -2261,6 +2261,8 @@ MonoBehaviour:
   direction: 1
   faceright: 1
   speed: 5
+  PatrolTimer: 10
+  IdleTimer: 5
   meleeAttackCoolDown: 1.5
   meleeAttackLastTime: 0
   DashCoolDown: 2
@@ -2272,7 +2274,7 @@ MonoBehaviour:
   FireballCoolDown: 1
   LastFireballTime: 0
   Blocking: 0
-  BlockCoolDown: 10
+  BlockCoolDown: 6
   BlockTimer: 0
   TransfarCoolDown: 6
   LastTransfar: 0
@@ -2284,7 +2286,7 @@ MonoBehaviour:
   - {fileID: 1150771291}
   AirTransPoint: {fileID: 423929847}
   SpellTimeCD: 0
-  SpellTime: 0
+  SpellTimer: 0
   spelling: 0
   bullet: {fileID: 6191868864301442259, guid: cd2b6092a71eea14cada8e4fb6318309, type: 3}
   shootpoint: {fileID: 1227598534}
@@ -2296,7 +2298,10 @@ MonoBehaviour:
   leftPoint: {fileID: 452115051}
   rightPoint: {fileID: 366771524}
   inorethis: 0
+  PhaseTimer: 5
   current_Status: 0
+  SKillPhase: 3
+  SKillTime: 0
   Next_Skill_Status: 0
 --- !u!114 &1796566747
 MonoBehaviour:
