@@ -275,7 +275,11 @@ public class Knight_Boss : MonoBehaviour
             break;
 
             case Status.Death:
-
+            anim.SetBool("Die",true);
+            speed = 0;
+            dashSpeed =0;
+            rb.velocity = new Vector2(0,0);
+            gameObject.layer = LayerMask.NameToLayer("BossInvincible");
             break;
         }
 
@@ -287,6 +291,7 @@ public class Knight_Boss : MonoBehaviour
         if(FindObjectOfType<PlayerHealthController>().Health_Current <= 0)
         {
             rb.velocity = new Vector2(0,0);
+            this.enabled = false;
         }
     }
 

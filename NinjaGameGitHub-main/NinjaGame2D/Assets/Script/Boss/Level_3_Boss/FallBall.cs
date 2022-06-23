@@ -23,6 +23,8 @@ public class FallBall : MonoBehaviour
         rb.velocity = transform.right * speed;
 
         playerHealth = GameObject.FindObjectOfType<PlayerHealthController>();
+
+        Destroy(this.gameObject,3.5f);
     }
 
     // Update is called once per frame
@@ -33,10 +35,6 @@ public class FallBall : MonoBehaviour
         {
             playerHealth.Health_Current -= damage;
             coll.enabled = false;
-            Destroy(this.gameObject);
-        }
-        else if(other.gameObject.tag == "AirWall")
-        {
             Destroy(this.gameObject);
         }
     }
