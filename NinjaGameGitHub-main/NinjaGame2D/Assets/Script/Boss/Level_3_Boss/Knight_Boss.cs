@@ -23,6 +23,7 @@ public class Knight_Boss : MonoBehaviour
     public float IdleTimer;
 
     [Header("近戰攻擊間隔")]
+    public GameObject AttackBox;
     public float meleeAttackCoolDown;
     public float meleeAttackLastTime;
 
@@ -69,7 +70,7 @@ public class Knight_Boss : MonoBehaviour
 
     [Header("階段")]
     public bool inorethis;
-    public enum Status{Prepare,Idle,Patrol,Spell,DashAttack,FireBall,Strike,trans};
+    public enum Status{Prepare,Idle,Patrol,Spell,DashAttack,FireBall,Strike,Death};
     [Header("當前階段")]
     public float PhaseTimer;
     public Status current_Status;
@@ -272,13 +273,26 @@ public class Knight_Boss : MonoBehaviour
                 current_Status = Status.Idle;
             }
             break;
+
+            case Status.Death:
+
+            break;
+        }
+
+        if(FindObjectOfType<BossHealthController>().Died)
+        {
+            current_Status = Status.Death; 
+        }
+
+        if(FindObjectOfType<PlayerHealthController>().Health_Current <= 0)
+        {
+            rb.velocity = new Vector2(0,0);
         }
     }
 
-    private void OnDrawGizmos() 
+    private void FixedUpdate() 
     {
-        Gizmos.color = hit? Color.red:Color.green;
-        Gizmos.DrawWireCube(meleedetectbox.transform.position,boxsize);
+
     }
 
     void BlockSKill()
@@ -312,6 +326,12 @@ public class Knight_Boss : MonoBehaviour
                 flip();
             }
         }
+    }
+
+    private void OnDrawGizmos() 
+    {
+        Gizmos.color = hit? Color.red:Color.green;
+        Gizmos.DrawWireCube(meleedetectbox.transform.position,boxsize);
     }
 
     void secondTrans()
@@ -541,11 +561,23 @@ public class Knight_Boss : MonoBehaviour
         }
     }
 
+    void Attack_Box_Attive()
+    {
+        AttackBox.SetActive(true);
+    }
+
+    void Attack_Box_UnAttive()
+    {
+        AttackBox.SetActive(false);
+    }
+
+
     private void OnCollisionEnter2D(Collision2D other) 
     {
         print(other.gameObject.tag);
         if(other.gameObject.tag == "AirWall" && current_Status == Status.Strike)
         {                  
+            Attack_Box_UnAttive();
             PhaseTimer = 3f;
             SKillTime++;
             Striking = false;
