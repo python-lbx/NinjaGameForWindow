@@ -15,19 +15,20 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         //普通關卡
-        levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked",1);
-        boss_levelsUnlocked = PlayerPrefs.GetInt("boss_levelsUnlocked");
+        //levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked",1);
+        boss_levelsUnlocked = PlayerPrefs.GetInt("boss_levelsUnlocked",1);
 
-        for(int i=0; i<buttons.Length;i++)
-        {
-            buttons[i].interactable = false;
-        }
+        /*
+            for(int i=0; i<buttons.Length;i++)
+            {
+                buttons[i].interactable = false;
+            }
 
-        for(int i=0; i<levelsUnlocked;i++)
-        {
-            buttons[i].interactable = true;
-        }
-
+            for(int i=0; i<levelsUnlocked;i++)
+            {
+                buttons[i].interactable = true;
+            }
+        */
 
         //首領戰
         for(int i=0;i<boss_buttons.Length;i++)
@@ -50,5 +51,10 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(int levelIndex)
     {
         SceneManager.LoadScene(levelIndex);
+    }
+
+    public void DeleteAllDate()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

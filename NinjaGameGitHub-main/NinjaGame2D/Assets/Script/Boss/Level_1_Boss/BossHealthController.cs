@@ -14,6 +14,8 @@ public class BossHealthController : MonoBehaviour
 
     public float rate;
 
+    public GameObject door;
+
     public enum Status {Ready,Go};
     public Status HP_Status;
 
@@ -51,6 +53,7 @@ public class BossHealthController : MonoBehaviour
                 {
                     Died = true;
                     Health_Current = 0;
+                    door.SetActive(true);
                 }
             break;
         }

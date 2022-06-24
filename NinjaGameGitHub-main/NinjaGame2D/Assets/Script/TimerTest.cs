@@ -13,7 +13,7 @@ public class TimerTest : MonoBehaviour
     public float current_t;
     public float last_t;
 
-    public enum Status{Ready,Go,End};
+    public enum Status{Ready,Go,End,GameOver};
     public Status Timer_status;
     BossHealthController bosshp;
     PlayerHealthController playerhp;
@@ -45,6 +45,10 @@ public class TimerTest : MonoBehaviour
             {
                 Timer_status = Status.End;
             }
+            else if(playerhp.Health_Current <= 0)
+            {
+                Timer_status = Status.GameOver;
+            }
             else
             {
                 current_t = Time.time - startTime;
@@ -60,6 +64,9 @@ public class TimerTest : MonoBehaviour
             {
                 PlayerPrefs.SetFloat("Last_Timer",current_t);
             }
+            break;
+            case Status.GameOver:
+
             break;
         }
     }
