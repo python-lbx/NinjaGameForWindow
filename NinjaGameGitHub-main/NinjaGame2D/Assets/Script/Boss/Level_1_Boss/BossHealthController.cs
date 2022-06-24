@@ -30,7 +30,7 @@ public class BossHealthController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         HP_Image.fillAmount = (float)Health_Current/(float)Health_Max;
         HP_Text.text = Health_Current.ToString() + "/" + Health_Max.ToString();
@@ -40,7 +40,7 @@ public class BossHealthController : MonoBehaviour
             case Status.Ready:
                 if(Health_Current <= Health_Max)
                 {
-                    Health_Current += Time.time/rate ;
+                    Health_Current += rate  ;
                 }
                 else if(Health_Current >= Health_Max)
                 {

@@ -829,12 +829,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80819422ef1b41044b315cafbbe9dcd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health_Max: 1000
+  Health_Max: 1500
   Health_Current: 0
   HP_Image: {fileID: 1864532633}
   HP_Text: {fileID: 1862395088}
   Died: 0
-  rate: 7.5
+  rate: 5
   door: {fileID: 5246467744423565796}
   HP_Status: 0
 --- !u!1 &413863727
@@ -4377,6 +4377,7 @@ MonoBehaviour:
   Fire_CD: 0
   Fire_Last_Time: 0
   dashTime: 0
+  LastDash: -10
   dashCoolDown: 0
   dashSpeed: 0
   Dashing: 0
@@ -5335,6 +5336,7 @@ MonoBehaviour:
   Fire_CD: 2
   Fire_Last_Time: 0
   dashTime: 0.12
+  LastDash: -10
   dashCoolDown: 2
   dashSpeed: 40
   Dashing: 0

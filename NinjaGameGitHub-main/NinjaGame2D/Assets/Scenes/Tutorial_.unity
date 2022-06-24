@@ -1207,8 +1207,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -301, y: 151}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -301, y: 140}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &947146165
 MonoBehaviour:
@@ -1243,7 +1243,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4F60\u7684\u751F\u547D\u503C"
+  m_Text: "\u4F60\u7684\u751F\u547D\u503C\n(\u53D7\u5230\u7279\u5B9A\u653B\u64CA\u6703\u4E0B\u964D)"
 --- !u!222 &947146166
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4178,7 +4178,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68.3, y: 13.1}
+  m_AnchoredPosition: {x: 68.3, y: -12}
   m_SizeDelta: {x: 1000, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2036929718
@@ -4214,7 +4214,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8ACB\u8A73\u95B1\u4F7F\u7528\u8AAA\u660E\n\u6309\"Z\"\u9375\u9032\u884C\u653B\u64CA\n\u6309\"F\"\u9375\u65BD\u653E\u706B\u7403\u8853\n\u6309\"C\"\u9375\u9032\u884C\u885D\u523A(\u53EF\u8FF4\u907F\u653B\u64CA,\u9069\u7576\u6642\u6A5F\u4F69\u5408\u653B\u64CA\u53EF\u9054\u5230\u885D\u523A\u653B\u64CA\u7684\u6548\u679C)\n\u6309\"A\"\u6216\"D\"\u9375\u6216\u65B9\u5411\u9375\u9032\u884C\u5DE6\u53F3\u79FB\u52D5\n\u6309\"S\"\u9375\u53EF\u9032\u884C\u4E0B\u8E72(\u53EF\u8FF4\u907F\u653B\u64CA)\n\u901A\u95DC\u689D\u4EF6:\n\u4FDD\u6301\u81EA\u8EAB\u751F\u547D\u503C\u5927\u65BC0\u4E14\u628A\u6575\u65B9\u751F\u547D\u503C\u964D\u81F30\n\u901A\u904E\u9580\u5247\u53EF\u4EE5\u524D\u5F80\u4E0B\u4E00\u95DC\n"
+  m_Text: "\u8ACB\u8A73\u95B1\u4F7F\u7528\u8AAA\u660E\n\u6309\"Z\"\u9375\u9032\u884C\u653B\u64CA\n\u6309\"F\"\u9375\u65BD\u653E\u706B\u7403\u8853\n\u6309\"C\"\u9375\u9032\u884C\u885D\u523A(\u53EF\u8FF4\u907F\u653B\u64CA,\u9069\u7576\u6642\u6A5F\u4F69\u5408\u653B\u64CA\u53EF\u9054\u5230\u885D\u523A\u653B\u64CA\u7684\u6548\u679C)\n\u6309\"A\"\u6216\"D\"\u9375\u6216\u65B9\u5411\u9375\"\u5DE6\"\u6216\"\u53F3\"\u9032\u884C\u5DE6\u53F3\u79FB\u52D5\n\u6309\"S\"\u9375\u6216\u65B9\u5411\u9375\"\u4E0B\"\u53EF\u9032\u884C\u4E0B\u8E72(\u53EF\u8FF4\u907F\u653B\u64CA)\n\u901A\u95DC\u689D\u4EF6:\n\u4FDD\u6301\u81EA\u8EAB\u751F\u547D\u503C\u5927\u65BC0\u4E14\u628A\u6575\u65B9\u751F\u547D\u503C\u964D\u81F30\n\u901A\u904E\u9580\u5247\u53EF\u4EE5\u524D\u5F80\u4E0B\u4E00\u95DC\n"
 --- !u!222 &2036929719
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5010,7 +5010,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BossName: BossLevelManager
-  boss_levelsUnlocked: 0
 --- !u!4 &2581986910356301117
 Transform:
   m_ObjectHideFlags: 0

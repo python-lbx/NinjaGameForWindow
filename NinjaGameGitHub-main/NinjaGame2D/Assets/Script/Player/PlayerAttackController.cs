@@ -24,7 +24,7 @@ public class PlayerAttackController : MonoBehaviour
     [Header("衝刺")]
     public float dashTime;//dash時長
     private float dashTimeLeft; //dash剩余時間
-    private float LastDash = -10f; //上一次dash時間點
+    public float LastDash = -10f; //上一次dash時間點
     public float dashCoolDown;
     public float dashSpeed;
     public bool Dashing;

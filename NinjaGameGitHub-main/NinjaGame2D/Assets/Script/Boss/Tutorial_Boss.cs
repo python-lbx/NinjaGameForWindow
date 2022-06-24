@@ -8,8 +8,6 @@ public class Tutorial_Boss : MonoBehaviour
     Collider2D coll;
 
     public string BossName;
-    public int boss_levelsUnlocked;
-
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +25,9 @@ public class Tutorial_Boss : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            boss_levelsUnlocked = PlayerPrefs.GetInt("boss_levelsUnlocked",1);
-
             SceneManager.LoadScene(BossName);
+
+            PlayerPrefs.SetInt("boss_levelsUnlocked",1);
         }
     }
 }

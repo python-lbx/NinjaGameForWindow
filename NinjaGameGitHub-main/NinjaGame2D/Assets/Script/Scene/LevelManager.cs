@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     {
         //普通關卡
         //levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked",1);
-        boss_levelsUnlocked = PlayerPrefs.GetInt("boss_levelsUnlocked",1);
+        boss_levelsUnlocked = PlayerPrefs.GetInt("boss_levelsUnlocked");
 
         /*
             for(int i=0; i<buttons.Length;i++)

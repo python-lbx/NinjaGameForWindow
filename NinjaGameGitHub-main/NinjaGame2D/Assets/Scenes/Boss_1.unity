@@ -885,10 +885,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 795141120, guid: 983c8e886b6f46445bb0d979496f3c6c, type: 3}
-      propertyPath: old_t
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1091263448173785056, guid: 983c8e886b6f46445bb0d979496f3c6c, type: 3}
       propertyPath: m_Name
       value: UI_Final
@@ -3347,12 +3343,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80819422ef1b41044b315cafbbe9dcd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health_Max: 500
+  Health_Max: 750
   Health_Current: 0
   HP_Image: {fileID: 131649619}
   HP_Text: {fileID: 1449847280}
   Died: 0
-  rate: 10
+  rate: 2
   door: {fileID: 2581986910356301113}
   HP_Status: 0
 --- !u!1 &1767940595
