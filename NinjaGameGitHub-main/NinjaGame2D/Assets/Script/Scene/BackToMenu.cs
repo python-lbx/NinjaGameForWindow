@@ -10,7 +10,7 @@ public class BackToMenu : MonoBehaviour
 
     public bool Escape;
 
-    PlayerHealthController playerhp;
+    public PlayerHealthController playerhp;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +23,7 @@ public class BackToMenu : MonoBehaviour
         if(playerhp.Health_Current <=0 )
         {
             Panel.SetActive(true);
+            Time.timeScale = 0;
         }
         else if(playerhp.Health_Current > 0)
         {
@@ -48,6 +49,11 @@ public class BackToMenu : MonoBehaviour
     public void BTM()
     {
         SceneManager.LoadScene(SceneName);
+    }
+
+    public void QTG()
+    {
+        Application.Quit();
     }
 
 }

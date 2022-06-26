@@ -57,4 +57,9 @@ public class LevelManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
+
+    public void QTG()
+    {
+        Application.Quit();
+    }
 }

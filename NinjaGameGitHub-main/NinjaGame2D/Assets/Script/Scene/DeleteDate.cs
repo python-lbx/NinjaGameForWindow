@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-
-public class GameStart : MonoBehaviour
+public class DeleteDate : MonoBehaviour
 {
-    public string levelname;
+    public GameObject panel;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,13 +17,18 @@ public class GameStart : MonoBehaviour
         
     }
 
-    public void gamestart()
+    public void showPanel()
     {
-        SceneManager.LoadScene(levelname);
+        panel.SetActive(true);
     }
 
-    public void QTG()
+    public void UnshowPanel()
     {
-        Application.Quit();
+        panel.SetActive(false);
+    }
+
+    public void Del()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

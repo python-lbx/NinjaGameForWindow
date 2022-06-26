@@ -81,6 +81,8 @@ public class PlayerAttackController : MonoBehaviour
         {
             if((Time.time >= (LastDash + dashCoolDown)) && PlayerMovement.horizontalmove !=0)
             {   
+                LastDash = Time.time;
+
                 ReadyToDash();
             }
         }
@@ -93,11 +95,13 @@ public class PlayerAttackController : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Player");
         }
+
+        Dash();
     }
 
     private void FixedUpdate() 
     {
-        Dash();
+
     }
 
     void ZboxAttive()
@@ -116,7 +120,6 @@ public class PlayerAttackController : MonoBehaviour
 
         dashTimeLeft = dashTime;
 
-        LastDash = Time.time;
     }
 
     void Dash()
