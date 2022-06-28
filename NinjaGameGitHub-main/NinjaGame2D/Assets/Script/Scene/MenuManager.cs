@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    public Transform menuPanel;
     public GameObject levelpackage;
     public GameObject settingpackage;
     
@@ -25,14 +26,28 @@ public class MenuManager : MonoBehaviour
         {
             levelpackage.SetActive(true);
         }
+
+               //開啟菜單
+        if(Input.GetKeyDown(GameManager.GM.escape))
+        {
+            if(menuPanel.gameObject.activeSelf)
+            {
+                menuPanel.gameObject.SetActive(false);
+            }
+            else
+            {
+                menuPanel.gameObject.SetActive(true);
+            }
+        }
+        
     }
 
-    void openSetting()
+    public void openSetting()
     {
         settingpackage.SetActive(true);
     }
 
-    void closeSetting()
+    public void closeSetting()
     {
         settingpackage.SetActive(false);
     }

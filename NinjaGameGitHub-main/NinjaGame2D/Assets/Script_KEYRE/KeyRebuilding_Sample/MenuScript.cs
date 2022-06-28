@@ -63,15 +63,7 @@ public class MenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //開啟菜單
-        if(Input.GetKeyDown(KeyCode.Escape) && !menuPanel.gameObject.activeSelf) //該物件是否激活?
-        {
-            menuPanel.gameObject.SetActive(true);
-        }
-        else if(Input.GetKeyDown(KeyCode.Escape) && menuPanel.gameObject.activeSelf)
-        {
-            menuPanel.gameObject.SetActive(false);
-        }
+ 
     }
 
 
@@ -134,7 +126,7 @@ public class MenuScript : MonoBehaviour
             case "crouch":
             GameManager.GM.crouch = newKey;
             buttonText.text = GameManager.GM.crouch.ToString();
-            PlayerPrefs.SetString("rightKey",GameManager.GM.crouch.ToString());
+            PlayerPrefs.SetString("crouchKey",GameManager.GM.crouch.ToString());
             break;
 
             case "jump":
@@ -146,31 +138,31 @@ public class MenuScript : MonoBehaviour
             case "attack":
             GameManager.GM.attack = newKey;
             buttonText.text = GameManager.GM.attack.ToString();
-            PlayerPrefs.SetString("forwardKey",GameManager.GM.attack.ToString());
+            PlayerPrefs.SetString("attackKey",GameManager.GM.attack.ToString());
             break;
 
             case "fireball":
             GameManager.GM.fireball = newKey;
             buttonText.text = GameManager.GM.fireball.ToString();
-            PlayerPrefs.SetString("backwardKey",GameManager.GM.fireball.ToString());
+            PlayerPrefs.SetString("fireballKey",GameManager.GM.fireball.ToString());
             break;
 
             case "dash":
             GameManager.GM.dash = newKey;
             buttonText.text = GameManager.GM.dash.ToString();
-            PlayerPrefs.SetString("forwardKey",GameManager.GM.dash.ToString());
+            PlayerPrefs.SetString("dashKey",GameManager.GM.dash.ToString());
             break;
 
             case "shoot":
             GameManager.GM.shoot = newKey;
             buttonText.text = GameManager.GM.shoot.ToString();
-            PlayerPrefs.SetString("backwardKey",GameManager.GM.shoot.ToString());
+            PlayerPrefs.SetString("shootKey",GameManager.GM.shoot.ToString());
             break;
 
             case "escape":
             GameManager.GM.escape = newKey;
             buttonText.text = GameManager.GM.escape.ToString();
-            PlayerPrefs.SetString("forwardKey",GameManager.GM.escape.ToString());
+            PlayerPrefs.SetString("escapeKey",GameManager.GM.escape.ToString());
             break;
         }
 
@@ -198,7 +190,7 @@ public class MenuScript : MonoBehaviour
             case "crouch":
             GameManager.GM.crouch = KeyCode.S;
             buttonText.text = GameManager.GM.crouch.ToString();
-            PlayerPrefs.SetString("rightKey",GameManager.GM.crouch.ToString());
+            PlayerPrefs.SetString("crouchKey",GameManager.GM.crouch.ToString());
             break;
 
             case "jump":
@@ -210,31 +202,31 @@ public class MenuScript : MonoBehaviour
             case "attack":
             GameManager.GM.attack = KeyCode.Z;
             buttonText.text = GameManager.GM.attack.ToString();
-            PlayerPrefs.SetString("forwardKey",GameManager.GM.attack.ToString());
+            PlayerPrefs.SetString("attackKey",GameManager.GM.attack.ToString());
             break;
 
             case "fireball":
             GameManager.GM.fireball = KeyCode.F;
             buttonText.text = GameManager.GM.fireball.ToString();
-            PlayerPrefs.SetString("backwardKey",GameManager.GM.fireball.ToString());
+            PlayerPrefs.SetString("fireballKey",GameManager.GM.fireball.ToString());
             break;
 
             case "dash":
             GameManager.GM.dash = KeyCode.C;
             buttonText.text = GameManager.GM.dash.ToString();
-            PlayerPrefs.SetString("forwardKey",GameManager.GM.dash.ToString());
+            PlayerPrefs.SetString("dashKey",GameManager.GM.dash.ToString());
             break;
 
             case "shoot":
             GameManager.GM.shoot = KeyCode.X;
             buttonText.text = GameManager.GM.shoot.ToString();
-            PlayerPrefs.SetString("backwardKey",GameManager.GM.shoot.ToString());
+            PlayerPrefs.SetString("shootKey",GameManager.GM.shoot.ToString());
             break;
 
             case "escape":
             GameManager.GM.escape = KeyCode.Escape;
             buttonText.text = GameManager.GM.escape.ToString();
-            PlayerPrefs.SetString("forwardKey",GameManager.GM.escape.ToString());
+            PlayerPrefs.SetString("escapeKey",GameManager.GM.escape.ToString());
             break;
         }
 
