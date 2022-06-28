@@ -45,8 +45,8 @@ public class PlayerMovementController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        capsulecoll = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
+        capsulecoll = GetComponent<CapsuleCollider2D>();
         PlayerHP = GetComponent<PlayerHealthController>();
         PlayerAC = GetComponent<PlayerAttackController>();
 
@@ -111,27 +111,41 @@ public class PlayerMovementController : MonoBehaviour
 
     void GroundMovement()
     {
-        horizontalmove = Input.GetAxisRaw("Horizontal");
+        //horizontalmove = Input.GetAxisRaw("Horizontal");
         //print(horizontalmove);
+
+        if(Input.GetKey(GameManager.GM.left))
+        {
+            horizontalmove = -1;
+        }
+        else if(Input.GetKey(GameManager.GM.right))
+        {
+            horizontalmove = 1;
+        }
+        else
+        {
+            horizontalmove = 0;
+        }
+
         rb.velocity = new Vector2(horizontalmove * speed,rb.velocity.y);
 
-        if(Input.GetButton("Crouch") && isOnGround)
+        if(Input.GetKey(GameManager.GM.crouch) && isOnGround)
         {
             Crouch();
         }
-        else if(!Input.GetButton("Crouch") && isCrouch && !isHeadBlock || !isOnGround)
+        else if(!Input.GetKey(GameManager.GM.crouch) && isCrouch && !isHeadBlock || !isOnGround)
         {
             StandUp();
         }
     }
     void Jump()
     {
-        if(Input.GetButtonDown("Jump") && isOnGround && jumpTime>0)
+        if(Input.GetKeyDown(GameManager.GM.jump) && isOnGround && jumpTime>0)
         {
             rb.velocity = new Vector2(rb.velocity.x,jumpForce);
             jumpTime--;
         }
-        else if (Input.GetButtonDown("Jump") && jumpTime>0)
+        else if (Input.GetKeyDown(GameManager.GM.jump) && jumpTime>0)
         {
             rb.velocity = new Vector2(rb.velocity.x,jumpForce);
             jumpTime--;

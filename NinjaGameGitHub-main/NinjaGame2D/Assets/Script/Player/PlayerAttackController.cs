@@ -41,7 +41,7 @@ public class PlayerAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z) && !PlayerMovement.isCrouch && !playerHealth.isHurt)
+        if(Input.GetKeyDown(GameManager.GM.attack) && !PlayerMovement.isCrouch && !playerHealth.isHurt)
         {
             if(Time.time >= (Z_Attack_CD + Z_Last_Time))
             {
@@ -58,7 +58,7 @@ public class PlayerAttackController : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.F) && !PlayerMovement.isCrouch && !playerHealth.isHurt) //當按下F鍵
+        if(Input.GetKeyDown(GameManager.GM.fireball) && !PlayerMovement.isCrouch && !playerHealth.isHurt) //當按下F鍵
         {
             if(Time.time >= (Fire_CD + Fire_Last_Time)) //冷卻完成
             {
@@ -77,7 +77,7 @@ public class PlayerAttackController : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKeyDown(GameManager.GM.dash))
         {
             if((Time.time >= (LastDash + dashCoolDown)) && PlayerMovement.horizontalmove !=0)
             {   
