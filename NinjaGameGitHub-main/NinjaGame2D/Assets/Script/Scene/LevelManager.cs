@@ -51,6 +51,7 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(int levelIndex)
     {
         SceneManager.LoadScene(levelIndex);
+        FindObjectOfType<AVmanager>().Stop("LevelMenuBGM");
     }
 
     public void DeleteAllDate()

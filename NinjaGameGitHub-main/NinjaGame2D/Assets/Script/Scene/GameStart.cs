@@ -10,7 +10,7 @@ public class GameStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        FindObjectOfType<AVmanager>().Play("StartMenuBGM");
     }
 
     // Update is called once per frame
@@ -21,6 +21,7 @@ public class GameStart : MonoBehaviour
 
     public void gamestart()
     {
+        FindObjectOfType<AVmanager>().Stop("StartMenuBGM");
         SceneManager.LoadScene(levelname);
     }
 

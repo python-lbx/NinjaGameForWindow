@@ -11,6 +11,8 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FindObjectOfType<AVmanager>().Play("LevelMenuBGM");
+
         levelpackage.SetActive(true);
         settingpackage.SetActive(false);
     }
