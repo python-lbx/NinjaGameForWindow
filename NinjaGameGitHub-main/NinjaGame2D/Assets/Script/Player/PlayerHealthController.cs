@@ -56,6 +56,7 @@ public class PlayerHealthController : MonoBehaviour
             isHurt = false;
 
             Health_Current = 0;
+
             anim.SetTrigger("Dead");
         }
 

@@ -242,6 +242,7 @@ public class BossABehavior : MonoBehaviour
         {
             if(BossA_Status == Status.Fall && time < 4)
             {
+                FindObjectOfType<AVmanager>().Play("Onground");
                 Invoke("ChangePos",2f);
                 time++;
             }

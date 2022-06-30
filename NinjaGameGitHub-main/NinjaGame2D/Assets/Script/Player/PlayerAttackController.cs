@@ -32,6 +32,8 @@ public class PlayerAttackController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FindObjectOfType<AVmanager>().Play("BattleStart");
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         PlayerMovement = GetComponent<PlayerMovementController>();
@@ -45,6 +47,8 @@ public class PlayerAttackController : MonoBehaviour
         {
             if(Time.time >= (Z_Attack_CD + Z_Last_Time))
             {
+                FindObjectOfType<AVmanager>().Play("ZAttack");
+
                 if(PlayerMovement.isOnGround)
                 {
                     Z_Last_Time = Time.time;

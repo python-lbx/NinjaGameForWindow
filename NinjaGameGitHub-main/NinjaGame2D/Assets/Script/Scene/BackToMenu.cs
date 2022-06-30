@@ -15,6 +15,25 @@ public class BackToMenu : MonoBehaviour
     void Start()
     {
         playerhp = FindObjectOfType<PlayerHealthController>();
+
+        if(SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            FindObjectOfType<AVmanager>().Play("TutorialBGM");
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            FindObjectOfType<AVmanager>().Play("Boss_One_BGM");
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            FindObjectOfType<AVmanager>().Play("Boss_Two_BGM");
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            FindObjectOfType<AVmanager>().Play("Boss_Three_BGM");
+        }
+
+
     }
 
     // Update is called once per frame
@@ -49,6 +68,11 @@ public class BackToMenu : MonoBehaviour
     public void BTM()
     {
         SceneManager.LoadScene(SceneName);
+
+        FindObjectOfType<AVmanager>().Stop("TutorialBGM");
+        FindObjectOfType<AVmanager>().Stop("Boss_One_BGM");
+        FindObjectOfType<AVmanager>().Stop("Boss_Two_BGM");
+        FindObjectOfType<AVmanager>().Stop("Boss_Three_BGM");
     }
 
     public void QTG()

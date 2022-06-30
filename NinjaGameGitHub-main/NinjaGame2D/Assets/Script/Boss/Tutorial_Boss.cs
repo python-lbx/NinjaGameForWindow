@@ -25,6 +25,8 @@ public class Tutorial_Boss : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
+            FindObjectOfType<AVmanager>().Stop("TutorialBGM");
+
             SceneManager.LoadScene(BossName);
 
             PlayerPrefs.SetInt("boss_levelsUnlocked",1);

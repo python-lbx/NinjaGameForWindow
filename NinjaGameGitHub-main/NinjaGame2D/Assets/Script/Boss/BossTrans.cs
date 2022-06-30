@@ -34,6 +34,12 @@ public class BossTrans : MonoBehaviour
             }
 
             SceneManager.LoadScene(BossName);
+
+            FindObjectOfType<AVmanager>().Stop("TutorialBGM");
+            FindObjectOfType<AVmanager>().Stop("Boss_One_BGM");
+            FindObjectOfType<AVmanager>().Stop("Boss_Two_BGM");
+            FindObjectOfType<AVmanager>().Stop("Boss_Three_BGM");
+
         }
     }
 }

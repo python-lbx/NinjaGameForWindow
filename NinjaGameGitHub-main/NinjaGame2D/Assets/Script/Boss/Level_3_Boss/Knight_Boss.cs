@@ -165,6 +165,8 @@ public class Knight_Boss : MonoBehaviour
                 }
                 else
                 {
+                    FindObjectOfType<AVmanager>().Play("spelling");
+
                     current_Status = Status.Spell;
                     PhaseTimer = SpellTimer;
                 }
@@ -214,6 +216,8 @@ public class Knight_Boss : MonoBehaviour
             }
             else if(PhaseTimer <=0)
             {
+                FindObjectOfType<AVmanager>().Play("uniqueskill");
+
                 spelling = false;
                 if(Next_Skill_Status == Status.FireBall || Next_Skill_Status == Status.Strike)
                 {
@@ -306,10 +310,13 @@ public class Knight_Boss : MonoBehaviour
         hit = Physics2D.OverlapBox(meleedetectbox.transform.position,boxsize,0,playerLayer); //判斷你有沒有碰到物件
         if(obj != null && obj.gameObject.name == "Z_Attack_Box" && Blocking)
         {   
+            FindObjectOfType<AVmanager>().Play("Block");
+
             anim.SetTrigger("BlockEffect");
             print(obj.gameObject.name);
             if(Time.time >= (meleeAttackLastTime + meleeAttackCoolDown))
             {
+                FindObjectOfType<AVmanager>().Play("Boss3Attack");
  
                 rb.velocity = new Vector2(0,0);
                 meleeAttackLastTime = Time.time;
@@ -526,6 +533,8 @@ public class Knight_Boss : MonoBehaviour
             if(Time.time >= (meleeAttackLastTime + meleeAttackCoolDown))
             {
                 meleeAttackLastTime = Time.time;
+                FindObjectOfType<AVmanager>().Play("Boss3Attack");
+
                 anim.SetTrigger("MeleeAttack");
                 SKillTime ++;
             }

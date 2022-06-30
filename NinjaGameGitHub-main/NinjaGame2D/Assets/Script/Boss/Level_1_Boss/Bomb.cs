@@ -38,6 +38,8 @@ public class Bomb : MonoBehaviour
         else if(other.gameObject.name == "Player")
         {
             anim.SetTrigger("Explore");
+            FindObjectOfType<AVmanager>().Play("Bomb");
+
             playerHealth.Health_Current -= damage;
             gameObject.layer = LayerMask.NameToLayer("Invincible");
         }
@@ -45,6 +47,8 @@ public class Bomb : MonoBehaviour
 
     void ChangeRed()
     {
+        FindObjectOfType<AVmanager>().Play("Bomb");
+
         Destroy(this.gameObject);
     }
 

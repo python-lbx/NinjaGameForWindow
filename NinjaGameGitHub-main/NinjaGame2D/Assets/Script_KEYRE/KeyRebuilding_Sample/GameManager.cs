@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
         shoot = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("shootKey","X"));
         escape = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("escapeKey","Escape"));
 
+
+
     }
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

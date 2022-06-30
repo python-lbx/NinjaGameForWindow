@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Audio;
 
@@ -28,27 +29,43 @@ public class AVmanager : MonoBehaviour
         foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
+            Totalvolume =  PlayerPrefs.GetFloat("Audio");//必須
+
             s.source.clip  = s.clip;
 
             s.source.volume = s.volume;
             s.source.pitch = s.ptich;
             s.source.loop = s.loop;
+
+            s.source.volume = Totalvolume;
         }
 
     }
     
     void Start()
     {
-        
+        foreach(Sound s in sounds)
+        {
+            s.source.volume = Totalvolume;
+            print(s.source.volume);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-      foreach(Sound s in sounds)
+
+        foreach(Sound s in sounds)
         {
             s.source.volume = Totalvolume;
+
+            PlayerPrefs.SetFloat("Audio",s.source.volume);
+
+            print(s.source.volume);
         }
+
+        
+        
     }
 
     public void Play(string name)

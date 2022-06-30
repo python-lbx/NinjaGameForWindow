@@ -100,6 +100,8 @@ public class BossBehaviour : MonoBehaviour
                 StartphaseTime = 8.5f; //衝刺時間
                 skilltime = 0; //重置
                 BossStatus = Status.Dash;
+
+                FindObjectOfType<AVmanager>().Play("BossOneSkill");
             }
             else
             {
@@ -117,6 +119,8 @@ public class BossBehaviour : MonoBehaviour
             }
             else if(StartphaseTime <= 0)
             {
+                FindObjectOfType<AVmanager>().Play("BossOneSkill");
+
                 timer = 1.3f;
                 Stimer = timer;
                 if(Vector2.Distance(transform.position,leftPoint.position)<0.1f)

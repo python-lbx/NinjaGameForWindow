@@ -759,6 +759,84 @@ MonoBehaviour:
     ptich: 1
     loop: 1
     source: {fileID: 0}
+  - name: TutorialBGM
+    clip: {fileID: 8300000, guid: 4f692dca7018be645a24a54d3c8689f7, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Boss_One_BGM
+    clip: {fileID: 8300000, guid: 310ae1320b45f42479858e0e28a795f1, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Boss_Two_BGM
+    clip: {fileID: 8300000, guid: 4ca2072c5e4abf54c8db75703111377d, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Boss_Three_BGM
+    clip: {fileID: 8300000, guid: 532daca5960c6eb429376d646f93e9f5, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: BattleStart
+    clip: {fileID: 8300000, guid: 9eaed93bd6b68444b9b42b2ee6d55117, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ZAttack
+    clip: {fileID: 8300000, guid: c97ad8599f0f7e341981ec7c48e14d71, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Onground
+    clip: {fileID: 8300000, guid: def8a0b18978f8f43ad7b636adc6287a, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Block
+    clip: {fileID: 8300000, guid: 0e3c8d3e35253494595e8317ecc88dab, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Boss3Attack
+    clip: {fileID: 8300000, guid: 85c9d388fa921234eb760b092bf30ef8, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: spelling
+    clip: {fileID: 8300000, guid: 1a2a5ac3d7afd2e4080edacb73a3e039, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: uniqueskill
+    clip: {fileID: 8300000, guid: c2c67ca6e4d8bc4438cbb804cfd1a750, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Bomb
+    clip: {fileID: 8300000, guid: f4d198628a66f6c468b1fd08ef96370d, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BossOneSkill
+    clip: {fileID: 8300000, guid: d473aec18cfaa1e4da16f0d512da1361, type: 3}
+    volume: 1
+    ptich: 1
+    loop: 0
+    source: {fileID: 0}
   Totalvolume: 1
 --- !u!4 &1537063246
 Transform:
