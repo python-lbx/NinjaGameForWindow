@@ -10,7 +10,7 @@ public class ShadowPool : MonoBehaviour
 
     public int shadowCount;
 
-    Queue<GameObject> availableObjects = new Queue<GameObject>();
+    Queue<GameObject> availableObjects = new Queue<GameObject>(); //新的隊列
 
     private void Awake() 
     {
@@ -24,8 +24,8 @@ public class ShadowPool : MonoBehaviour
     {
         for(int i = 0;i < shadowCount; i++)
         {
-            var newShadow = Instantiate(shadowPrefab);
-            newShadow.transform.SetParent(transform);
+            var newShadow = Instantiate(shadowPrefab); //產生預置體
+            newShadow.transform.SetParent(transform); //成為子物件
 
             //取消啟用,返回對象池
             ReturnPool(newShadow);
@@ -34,21 +34,21 @@ public class ShadowPool : MonoBehaviour
 
     public void ReturnPool(GameObject gameObject)
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); //不顯示
 
-        availableObjects.Enqueue(gameObject);
+        availableObjects.Enqueue(gameObject); //回到隊伍後面等待
     }
     
     public GameObject GetFormPool()
     {
-        if(availableObjects.Count == 0)
+        if(availableObjects.Count == 0) //不夠了
         {
-            FillPool();
+            FillPool(); //再生成
         }
-        var outShadow = availableObjects.Dequeue();
+        var outShadow = availableObjects.Dequeue(); //從隊伍前排取出
 
         outShadow.SetActive(true);
 
-        return outShadow;
+        return outShadow; //傳出生成的物件
     }
 }

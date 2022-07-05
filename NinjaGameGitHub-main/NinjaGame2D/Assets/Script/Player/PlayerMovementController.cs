@@ -57,16 +57,12 @@ public class PlayerMovementController : MonoBehaviour
         colliderCrouchOffset = new Vector2(-0.07691693f,-0.5154546f);
         
         faceright = true;
+        facedirection = 1;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(PlayerAC.Dashing)
-        {
-            return;
-        }
-        GroundMovement();
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_Ground"))
         {
             return;
@@ -95,6 +91,15 @@ public class PlayerMovementController : MonoBehaviour
     }
     void Update()
     {
+        if(PlayerAC.Dashing)
+        {
+            return;
+        }
+        else
+        {
+        GroundMovement();
+        }
+
         animController();
         PhysicalCheck();
         if(isHeadBlock&&isCrouch&&isOnGround)
